@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Love Delivery">
+<meta name="theme-color" content="#ffffff">
+<title>Love Delivery</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c1c1e;--mute:#8a8a90;--line:#ececf0;--bg:#fff;--soft:#f6f6f8;--rose:#e4456b;--rose-s:#fdeef2;--ok:#2fa36b}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;font-size:15px;line-height:1.5}
+#app{max-width:480px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 14px) 20px calc(110px + env(safe-area-inset-bottom,0px))}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+h1{font-size:28px;font-weight:600;letter-spacing:-.01em;margin:0}
+h2{font-size:13px;font-weight:500;color:var(--mute);margin:26px 0 4px}
+.top{display:flex;justify-content:space-between;align-items:center;height:44px}
+.logo{font-weight:600;font-size:17px}.logo i{color:var(--rose);font-style:normal}
+.link{color:var(--mute);font-size:14px}
+.hello{margin:18px 0 6px}.hello p{margin:4px 0 0;color:var(--mute)}
+.seg{display:flex;background:var(--soft);border-radius:12px;padding:3px;margin:18px 0 4px}
+.seg button{flex:1;padding:8px;border-radius:10px;color:var(--mute);font-weight:500}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.badge{display:inline-block;background:var(--rose);color:#fff;border-radius:99px;font-size:11px;padding:0 6px;margin-left:5px}
+.row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.ic{color:var(--rose);flex:none;width:46px;height:46px;border-radius:14px;background:var(--soft);display:grid;place-items:center;font-size:22px}
+.row .t{flex:1;min-width:0}.row b{font-weight:500;display:block}.row small{color:var(--mute);font-size:13px}
+.qty{display:flex;align-items:center;gap:12px}.qty span{min-width:14px;text-align:center;font-weight:500}
+.rb{width:32px;height:32px;border-radius:50%;background:var(--rose);color:#fff;font-size:18px;display:grid;place-items:center}
+.rb.g{background:var(--soft);color:var(--ink)}
+.bar{position:fixed;left:0;right:0;bottom:0;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.btn{display:block;width:100%;max-width:440px;margin:0 auto;padding:14px;border-radius:14px;background:var(--ink);color:#fff;font-weight:500;text-align:center}
+.btn.rose{background:var(--rose)}.btn.line{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.5}
+.login{min-height:80vh;display:flex;flex-direction:column;justify-content:center;gap:14px;text-align:center}
+.login .mark{color:var(--rose);width:72px;height:72px;margin:0 auto 6px;border-radius:22px;background:var(--rose-s);display:grid;place-items:center;font-size:34px}
+.lb{text-align:left;font-size:13px;color:var(--mute);margin-bottom:-8px}
+.login p{color:var(--mute);margin:0 0 14px}
+.card{border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
+.card .h{display:flex;justify-content:space-between;align-items:baseline}
+.card .h b{font-weight:600}.card .h small{color:var(--mute)}
+.it{margin:8px 0 0;padding:0;list-style:none}.it li{display:flex;justify-content:space-between;padding:2px 0}
+.note{margin-top:8px;padding:8px 12px;background:var(--soft);border-radius:10px;font-size:13px;color:var(--mute)}
+.trk{display:flex;margin:16px 0 4px}
+.s{flex:1;text-align:center;font-size:11px;color:var(--mute);position:relative}
+.s::before{content:"";position:absolute;top:5px;left:-50%;width:100%;height:2px;background:var(--line)}
+.s:first-child::before{display:none}
+.s i{position:relative;display:block;width:12px;height:12px;border-radius:50%;background:var(--line);margin:0 auto 6px}
+.s.d{color:var(--ink)}.s.d i,.s.d::before{background:var(--ok)}
+.s.n{color:var(--rose);font-weight:500}.s.n i{background:var(--rose);box-shadow:0 0 0 4px var(--rose-s)}.s.n::before{background:var(--ok)}
+.go{margin-top:12px;width:100%;padding:11px;border-radius:12px;background:var(--rose);color:#fff;font-weight:500}
+.empty{text-align:center;color:var(--mute);padding:48px 0}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 12px);transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;z-index:9;animation:in .3s}
+@keyframes in{from{opacity:0;transform:translate(-50%,-12px)}}
+.field{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;margin-top:8px;resize:none}
+.mark svg,.ok svg{width:32px;height:32px}.done{text-align:center;padding:70px 0 20px}.done .ok{color:var(--rose);width:64px;height:64px;border-radius:50%;background:var(--rose-s);display:grid;place-items:center;margin:0 auto 18px;font-size:30px;animation:pop .5s}
+@keyframes pop{from{transform:scale(.5);opacity:0}}
+.err{color:var(--rose);font-size:13px}
+.promo{margin-top:14px;padding:12px 14px;border-radius:14px;background:var(--rose-s);color:var(--rose);font-weight:500}
+.loy{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px}
+.row2{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.row2 small{color:var(--mute);text-align:right}
+.pb{height:6px;border-radius:9px;background:var(--soft);margin-top:8px;overflow:hidden}.pb i{display:block;height:100%;background:var(--rose);border-radius:9px;transition:width .6s}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.stat{border:1px solid var(--line);border-radius:16px;padding:14px}.stat b{display:block;font-size:20px;font-weight:600}.stat small{color:var(--mute)}
+.eta{margin-top:6px;color:var(--rose);font-size:13px;font-weight:500}
+.sb{color:#d3d3da;padding:2px}.sb.on{color:var(--rose)}.sb.on svg{fill:currentColor}.sb svg{width:26px;height:26px}.stars{margin-top:8px}.stars .sb svg{width:18px;height:18px}
+.rate{margin-top:12px;display:flex;justify-content:space-between;align-items:center;color:var(--mute)}
+.rcpt{margin-top:12px;padding:14px;border:1px dashed var(--mute);border-radius:12px;font-size:13px}.r2{display:flex;justify-content:space-between;padding:2px 0}
+.fh{position:fixed;bottom:22%;color:var(--rose);opacity:0;animation:fl 2s ease-out forwards;pointer-events:none;z-index:9}.fh svg{width:22px;height:22px;fill:currentColor}
+@keyframes fl{20%{opacity:.8}to{opacity:0;transform:translateY(-220px)}}
+.tks{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px}
+.tk{flex:none;width:260px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 20px;background:var(--rose-s);border-radius:14px;-webkit-mask:radial-gradient(circle 8px at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 8px at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 8px at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 8px at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat}
+.tk b{display:block;color:var(--rose)}.tk small{color:var(--mute);display:block}.tk button{flex:none;border-radius:99px;background:var(--rose);color:#fff;padding:6px 14px;font-weight:500}.tk.u{opacity:.45}.tk.u button{background:var(--mute);pointer-events:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+import {
+  getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+import {
+  getFirestore,collection,setDoc,doc,updateDoc,query,where,orderBy,limit,onSnapshot
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC25WEoTG90IS1SuxgUEtVmNtXFAmpevos",
+  authDomain: "lovedelivery.firebaseapp.com",
+  projectId: "lovedelivery",
+  storageBucket: "lovedelivery.firebasestorage.app",
+  messagingSenderId: "747278269239",
+  appId: "1:747278269239:web:b0c7daecea0820ceb038b2",
+  measurementId: "G-HYRY00ZYRZ"
+};
+
+const OWNER_EMAIL = "fonngernjaipinta@gmail.com";
+
+const MENU=[
+ {id:1,c:"ใกล้ชิด",e:"heart",n:"กอด 1 นาที",d:"กอดแน่นแน่นเลย"},
+ {id:2,c:"ใกล้ชิด",e:"smile",n:"หอมแก้ม 1 ครั้ง",d:"เสิร์ฟร้อนๆ"},
+ {id:3,c:"ใกล้ชิด",e:"spark",n:"จุ๊บ 1 ครั้ง",d:"เลือกตำแหน่งได้"},
+ {id:5,c:"เดท",e:"camera",n:"ถ่าย Photo Booth",d:"ถ่ายไว้ดู น่ารักดี"},
+ {id:6,c:"เดท",e:"film",n:"ดูหนังด้วยกัน",d:"ให้ตัวเป็นคนเลือกเรื่อง"},
+ {id:4,c:"เดท",e:"pin",n:"เดินเล่น",d:"ไปไหนก็ได้ที่ตัวอยากไป"},
+ {id:9,c:"บริการ",e:"wave",n:"นวดไหล่ 10 นาที",d:"นวดจนหายปวด"},
+ {id:10,c:"บริการ",e:"chat",n:"นั่งฟังตัวเล่าเรื่อง",d:"ตั้งใจฟัง ไม่เล่นมือถือ"},
+ {id:13,c:"สิทธิพิเศษ",e:"trophy",n:"ยอมให้ชนะ 1 ครั้ง",d:"ใช้ได้ตอนเถียงกัน"},
+ {id:17,c:"สิทธิพิเศษ",e:"clock",n:"ไม่เถียง 1 ชั่วโมง",d:"ตัวพูดอะไรก็ได้ เค้าไม่เถียง"},
+ {id:14,c:"สิทธิพิเศษ",e:"star",n:"ขออะไรก็ได้ 1 ครั้ง",d:"ที่เป็นไปได้นะ"},
+ {id:15,c:"สิทธิพิเศษ",e:"cup",n:"กินน้ำหวานเกิน 1 แก้ว",d:"อนุมัติพิเศษวันนี้วันเดียว"},
+ {id:16,c:"สิทธิพิเศษ",e:"sun",n:"ไม่งอนทั้งวัน",d:"รับประกันความใจดี 24 ชม."}
+];
+
+const IC={
+heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+smile:'<circle cx="12" cy="12" r="9"/><path d="M8 14c1 1.6 2.4 2.4 4 2.4s3-.8 4-2.4M9 9.5v.5M15 9.5v.5"/>',
+spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17v4M17 19h4"/>',
+pin:'<path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>',
+link:'<circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/>',
+camera:'<path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+film:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5z"/>',
+wave:'<path d="M3 9c3-3 6 3 9 0s6 3 9 0M3 15c3-3 6 3 9 0s6 3 9 0"/>',
+chat:'<path d="M4 5h16v11H9l-5 4z"/>',
+mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H4v1a3 3 0 0 0 4 3M16 6h4v1a3 3 0 0 1-4 3M12 13v4M8 20h8M10 17h4"/>',
+star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+cup:'<path d="M6 8h11v7a4 4 0 0 1-4 4h-3a4 4 0 0 1-4-4z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17M12 3v3"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6L7 7M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>'
+};
+
+const ico=k=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]||""}</svg>`;
+const CATS=["ทั้งหมด","ใกล้ชิด","เดท","บริการ","สิทธิพิเศษ"];
+const ST=[["new","รับออเดอร์"],["prep","กำลังเตรียม"],["ship","กำลังจัดส่ง"],["done","ส่งถึงแล้ว"]];
+const NEXT={new:"เริ่มเตรียม",prep:"ออกจัดส่ง",ship:"ส่งถึงแล้ว"};
+const $=document.getElementById("app");
+const S={
+ rp:{},rc:{},cp:[],cpc:{},menu:null,
+ nick:(()=>{try{return localStorage.getItem("ld_nick")||""}catch(e){return""}})(),
+ user:null,owner:false,cat:"ทั้งหมด",cart:{},orders:[],
+ tab:"menu",otab:"open",first:true,err:""
+};
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const toast=t=>{
+ const e=document.createElement("div");
+ e.className="toast";e.textContent=t;document.body.appendChild(e);
+ setTimeout(()=>e.remove(),3200);
+ try{navigator.vibrate&&navigator.vibrate(120)}catch(x){}
+};
+const n=()=>Object.keys(S.cart).length;
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+let unsub=null;
+
+const ICN={
+ heart:"หัวใจ",smile:"ยิ้ม",spark:"ประกาย",pin:"หมุด",
+ camera:"กล้อง",film:"หนัง",wave:"คลื่น",chat:"แชท",
+ mail:"จดหมาย",trophy:"ถ้วย",star:"ดาว",cup:"แก้ว",
+ sun:"ตะวัน",clock:"นาฬิกา"
+};
+const menu=()=>(S.menu||MENU).filter(m=>m.on!==false);
+const greet=()=>{
+ const h=new Date().getHours();
+ return h<5?"ยังไม่นอนอีกเหรอ":h<12?"อรุณสวัสดิ์":h<17?"สวัสดียามบ่าย":h<21?"สวัสดียามเย็น":"ใกล้เวลานอนแล้วนะ";
+};
+const ping=t=>{
+ toast(t);
+ try{
+  if("Notification" in window&&Notification.permission==="granted"&&document.hidden)
+   new Notification("Love Delivery",{body:t});
+ }catch(x){}
+};
+const rr=()=>{
+ if(!document.getElementById("note")&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))render();
+};
+const hm=t=>new Date(t).toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit"});
+const etaTxt=e=>{
+ const ms=e-Date.now(),d=new Date(e);
+ return ms>=864e5?"อีก "+Math.ceil(ms/864e5)+" วัน · ถึงวันที่ "+d.toLocaleDateString("th-TH",{day:"numeric",month:"short"})+" เวลา "+hm(e)+" น.":ms>0?"ถึงโดยประมาณ "+hm(e)+" น.":"ใกล้ถึงแล้ว";
+};
+const stars=(n,id)=>[1,2,3,4,5].map(k=>`<button class="sb${k<=n?" on":""}" ${id?`data-r="${id}:${k}"`:"disabled"} aria-label="${k} ดาว">${ico("star")}</button>`).join("");
+
+function hearts(){
+ for(let k=0;k<10;k++){
+  const e=document.createElement("span");
+  e.className="fh";e.innerHTML=ico("heart");
+  e.style.cssText=`left:${10+Math.random()*80}%;animation-delay:${Math.random()*.8}s`;
+  document.body.appendChild(e);setTimeout(()=>e.remove(),2800);
+ }
+}
+
+function promoBox(){
+ const used=new Set(S.orders.flatMap(o=>(o.coupons||[]).map(c=>c.id)));
+ if(!S.cp.length)return "";
+ return `<h2 style="margin-top:18px">คูปอง</h2><div class="tks">`+
+ S.cp.map(c=>{
+  const u=used.has(c.id),on=!!S.cpc[c.id];
+  return `<div class="tk${u?" u":""}"><div><b>${esc(c.t)}</b><small>${esc(c.d||"")}</small></div><button data-cu="${c.id}" ${u?"disabled":""} ${on?'style="background:var(--ink)"':""}>${u?"ใช้แล้ว":on?"ยกเลิก":"ใช้คูปอง"}</button></div>`;
+ }).join("")+`</div>`;
+}
+
+function statsView(){
+ const L=S.orders,done=L.filter(o=>o.status==="done").length,cnt={},rs=[];
+ let tot=0;
+ L.forEach(o=>{
+  (o.items||[]).forEach(x=>{cnt[x.n]=(cnt[x.n]||0)+x.q;tot+=x.q});
+  if(o.rating)rs.push(o.rating);
+ });
+ const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
+ const avg=rs.length?(rs.reduce((a,b)=>a+b,0)/rs.length).toFixed(1):"-";
+ const g=(v,l)=>`<div class="stat"><b>${v}</b><small>${l}</small></div>`;
+ return `<div class="grid">${g(L.length,"ออเดอร์ทั้งหมด")}${g(tot,"รายการที่สั่ง")}${g(top?esc(top[0]):"-","สั่งบ่อยที่สุด")}${g(avg,"คะแนนเฉลี่ย")}</div>`;
+}
+
+function menuEd(){
+ const M=S.menu||MENU;
+ return `<h2>โปรโมชั่น / คูปอง</h2>`+
+ S.cp.map((c,i)=>`<div class="row"><div class="ic">${ico("star")}</div><div class="t"><b>${esc(c.t)}</b><small>${esc(c.d||"")}</small></div><button class="link" data-cd="${i}">ลบ</button></div>`).join("")+
+ `<input class="field" id="ct" placeholder="ชื่อคูปอง เช่น กอดฟรีเพิ่ม 1 ครั้ง"><input class="field" id="cd" placeholder="รายละเอียดสั้นๆ (ไม่บังคับ)"><button class="btn rose" id="cpa">ออกคูปอง</button><h2>เมนู (${M.length})</h2>`+
+ M.map((m,i)=>`<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b style="${m.on===false?"opacity:.4":""}">${esc(m.n)}</b><small>${m.c}</small></div><button class="link" data-me="${i}">แก้</button><button class="link" data-mt="${i}">${m.on===false?"เปิด":"ซ่อน"}</button><button class="link" data-md="${i}">ลบ</button></div>`).join("")+
+ `<h2>เพิ่มเมนูใหม่</h2><input class="field" id="an" placeholder="ชื่อเมนู"><input class="field" id="ad" placeholder="คำอธิบายสั้นๆ"><select class="field" id="ac">${CATS.slice(1).map(c=>`<option>${c}</option>`).join("")}</select><select class="field" id="ai">${Object.keys(ICN).map(k=>`<option value="${k}">ไอคอน${ICN[k]}</option>`).join("")}</select><button class="btn rose" id="am">เพิ่มเมนู</button>`;
+}
+
+onAuthStateChanged(auth,u=>{
+ S.user=u;
+ S.owner=!!u&&u.email&&u.email.toLowerCase()===OWNER_EMAIL.toLowerCase();
+ if(unsub){unsub();unsub=null}
+ S.orders=[];S.first=true;
+
+ if(u){
+  const col=collection(db,"orders");
+  const q=S.owner
+   ?query(col,orderBy("ts","desc"),limit(80))
+   :query(col,where("uid","==",u.uid));
+
+  const u1=onSnapshot(q,snap=>{
+   if(!S.first)snap.docChanges().forEach(ch=>{
+    const d=ch.doc.data();
+    if(S.owner&&ch.type==="added")ping("ออเดอร์ใหม่จาก "+d.name);
+    if(!S.owner&&ch.type==="modified"&&!(ch.doc.metadata&&ch.doc.metadata.hasPendingWrites)){
+     const s=ST.find(x=>x[0]===d.status);
+     ping(d.reply&&S.rp[ch.doc.id]!==d.reply?"ฝน: "+d.reply:s?s[1]:"");
+    }
+   });
+   S.first=false;
+   snap.docs.forEach(x=>{S.rp[x.id]=x.data().reply});
+   S.orders=snap.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>b.ts-a.ts);
+   rr();
+  },e=>{S.err="อ่านออเดอร์ไม่ได้: "+e.code;render()});
+
+  const u2=onSnapshot(doc(db,"config","coupons"),s=>{
+   S.cp=s.exists()?s.data().items||[]:[];rr();
+  },()=>{});
+  const u3=onSnapshot(doc(db,"config","menu"),s=>{
+   S.menu=s.exists()?s.data().items:null;rr();
+  },()=>{});
+  unsub=()=>{u1();u2();u3()};
+ }
+ render();
+});
+
+function render(){
+ if(!S.user)return login();
+ S.owner?owner():customer();
+}
+
+function nickOk(){
+ const v=document.getElementById("nk").value.trim();
+ if(!v){S.err="กรุณากรอกชื่อเล่น";login();return false}
+ S.nick=v;S.err="";
+ try{localStorage.setItem("ld_nick",v)}catch(x){}
+ return true;
+}
+
+function login(){
+ $.innerHTML=`<div class="login"><div class="mark">${ico("heart")}</div><h1>Love Delivery</h1><p>ส่งความรักถึงที่ ทุกเวลา</p>
+ <label class="lb" for="nk">ชื่อเล่น</label><input class="field" id="nk" placeholder="กรอกชื่อเล่น" maxlength="20" autocomplete="nickname" value="${esc(S.nick)}" style="margin:0 0 4px"><button class="btn" id="g">เข้าสู่ระบบด้วย Google</button><div class="err">${esc(S.err)}</div></div>`;
+ document.getElementById("g").onclick=()=>{
+  if(!nickOk())return;
+  signInWithPopup(auth,new GoogleAuthProvider()).catch(e=>{
+   S.err="เข้าสู่ระบบไม่สำเร็จ ("+e.code+")";login();
+  });
+ };
+}
+
+const head=r=>`<div class="top"><span class="logo">Love<i>.</i>Delivery</span><span>${("Notification" in window&&Notification.permission==="default")?'<button class="link" id="nt">เปิดแจ้งเตือน</button> · ':""}<button class="link" id="out">${r?r+" · ":""}ออกจากระบบ</button></span></div>`;
+
+function track(o){
+ const i=ST.findIndex(s=>s[0]===o.status);
+ return `<div class="trk">${ST.map((s,k)=>`<div class="s ${i===3||k<i?"d":k===i?"n":""}"><i></i>${s[1]}</div>`).join("")}</div>`;
+}
+
+const no=o=>"#"+(o.num?String(o.num).padStart(3,"0"):o.id.slice(-4).toUpperCase());
+
+function card(o,own){
+ const t=new Date(o.ts).toLocaleString("th-TH",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+ const i=ST.findIndex(s=>s[0]===o.status),dn=i===3;
+ let h=`<div class="card"><div class="h"><b>${own?esc(o.name)+" · "+no(o):"ออเดอร์ "+no(o)}</b><small>${t}</small></div>
+ <ul class="it">${(o.items||[]).map(x=>`<li><span>${ico(x.e)} ${esc(x.n)}</span><span>×${x.q}</span></li>`).join("")}</ul>
+ ${(o.coupons||[]).map(c=>`<div class="note" style="background:var(--rose-s);color:var(--rose)">ใช้คูปอง: ${esc(c.t)}</div>`).join("")}${o.note?`<div class="note">${esc(o.note)}</div>`:""}${track(o)}`;
+
+ if(o.status==="ship"&&o.eta)h+=`<div class="eta">${etaTxt(o.eta)}</div>`;
+ if(o.reply)h+=`<div class="note" style="background:var(--rose-s);color:var(--rose)">ฝน: ${esc(o.reply)}</div>`;
+ if(o.rating)h+=`<div class="stars">${stars(o.rating)}</div>`;
+
+ if(own){
+  if(!dn)h+=(o.status==="prep"?`<select class="field" data-eta="${o.id}" style="margin:12px 0 0">${[5,10,15,20,30,45].map(m=>`<option value="${m}">ถึงใน ${m} นาที</option>`).join("")+[1,2,3,4,5].map(d=>`<option value="${d*1440}">อีก ${d} วัน</option>`).join("")}</select>`:"")+`<button class="go" data-o="${o.id}" data-s="${ST[i+1][0]}">${NEXT[o.status]}</button>`;
+  h+=`<div style="display:flex;gap:8px;margin-top:10px"><input class="field" data-rp="${o.id}" style="margin:0" maxlength="80" placeholder="ตอบกลับสั้นๆ" value="${esc(o.reply||"")}"><button class="go" data-rs="${o.id}" style="margin:0;width:auto;padding:0 18px">ส่ง</button></div>`;
+ }else{
+  if(dn&&!o.rating)h+=`<div class="rate"><small>ให้คะแนนออเดอร์นี้</small><div>${stars(0,o.id)}</div></div>`;
+  h+=`<div style="display:flex;gap:8px;margin-top:12px">${dn?`<button class="btn line" data-rc="${o.id}" style="padding:10px">ใบเสร็จ</button>`:""}<button class="btn line" data-ro="${o.id}" style="padding:10px">สั่งอีกครั้ง</button></div>`;
+  if(S.rc[o.id])h+=`<div class="rcpt"><b>Love Delivery</b><div>${no(o)} · ${t}</div>${(o.items||[]).map(x=>`<div class="r2"><span>${esc(x.n)}</span><span>×${x.q}</span></div>`).join("")}${(o.coupons||[]).map(c=>`<div class="r2"><span>คูปอง: ${esc(c.t)}</span><span>ใช้แล้ว</span></div>`).join("")}<div class="r2"><b>ยอดรวม</b><b>${(o.items||[]).reduce((a,x)=>a+x.q,0)} หัวใจ</b></div><div style="text-align:center;margin-top:8px">ขอบคุณที่มาอุดหนุนนะ<br>ลงชื่อ ฝน</div></div>`;
+ }
+ return h+`</div>`;
+}
+
+function customer(){
+ const act=S.orders.filter(o=>o.status!=="done").length;
+ let h=head("");
+ h+=`<div class="hello"><h1>${greet()} ${esc(S.nick||(S.user.displayName||"").split(" ")[0])}</h1><p>วันนี้อยากได้อะไรเป็นพิเศษไหม</p></div>
+ <div class="seg"><button data-t="menu" class="${S.tab==="menu"?"on":""}">เมนู</button><button data-t="orders" class="${S.tab==="orders"?"on":""}">ออเดอร์${act?`<span class="badge">${act}</span>`:""}</button><button data-t="stats" class="${S.tab==="stats"?"on":""}">สถิติ</button></div>`;
+
+ if(S.tab==="menu"){
+  h+=promoBox();
+  h+=`<div class="seg" style="background:none;padding:0;gap:6px;overflow-x:auto">${CATS.map(c=>`<button data-c="${c}" class="${c===S.cat?"on":""}" style="flex:none;padding:6px 14px;background:${c===S.cat?"var(--ink)":"var(--soft)"};color:${c===S.cat?"#fff":"var(--mute)"};box-shadow:none;border-radius:99px;font-size:14px">${c}</button>`).join("")}</div>`;
+  menu().filter(m=>S.cat==="ทั้งหมด"||m.c===S.cat).forEach(m=>{
+   const q=S.cart[m.id]||0;
+   h+=`<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b>${esc(m.n)}</b><small>${esc(m.d)}</small></div><div class="qty">${q?`<button class="rb g" data-m="${m.id}" aria-label="ลด">−</button><span>${q}</span>`:""}<button class="rb" data-p="${m.id}" aria-label="เพิ่ม">+</button></div></div>`;
+  });
+  const nc=Object.keys(S.cpc).length;
+  if(n()||nc)h+=`<div class="bar"><button class="btn rose" id="cart">ดูตะกร้า${n()?` · ${n()} รายการ`:""}${nc?` · ${nc} คูปอง`:""}</button></div>`;
+ }else if(S.tab==="stats")h+=statsView();
+ else h+=S.orders.length?S.orders.map(o=>card(o,false)).join(""):`<div class="empty">ยังไม่มีออเดอร์</div>`;
+
+ if(S.err)h+=`<p class="err">${esc(S.err)}</p>`;
+ $.innerHTML=h;bind();
+}
+
+function owner(){
+ const open=S.orders.filter(o=>o.status!=="done");
+ const done=S.orders.filter(o=>o.status==="done"),T=S.otab;
+ let h=head("เจ้าของร้าน")+`<div class="hello"><h1>ออเดอร์</h1></div><div class="seg">${[["open","รอ"+(open.length?`<span class="badge">${open.length}</span>`:"")],["done","ส่งแล้ว"],["menu","เมนู"],["stats","สถิติ"]].map(t=>`<button data-ot="${t[0]}" class="${T===t[0]?"on":""}">${t[1]}</button>`).join("")}</div>`;
+ if(T==="menu")h+=menuEd();
+ else if(T==="stats")h+=statsView();
+ else{
+  const l=T==="open"?open:done;
+  h+=l.length?l.map(o=>card(o,true)).join(""):`<div class="empty">ยังไม่มีออเดอร์</div>`;
+ }
+ $.innerHTML=h+(S.err?`<p class="err">${esc(S.err)}</p>`:"");bind();
+}
+
+function bind(){
+ const q=s=>$.querySelectorAll(s);
+ const out=document.getElementById("out");
+ if(out)out.onclick=()=>{S.cart={};signOut(auth)};
+ const nt=document.getElementById("nt");
+ if(nt)nt.onclick=()=>Notification.requestPermission().then(render);
+
+ q("[data-c]").forEach(b=>b.onclick=()=>{S.cat=b.dataset.c;render()});
+ q("[data-t]").forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;render()});
+ q("[data-ot]").forEach(b=>b.onclick=()=>{S.otab=b.dataset.ot;render()});
+ q("[data-p]").forEach(b=>b.onclick=()=>{const k=b.dataset.p;S.cart[k]=(S.cart[k]||0)+1;render()});
+ q("[data-m]").forEach(b=>b.onclick=()=>{const k=b.dataset.m;if(--S.cart[k]<=0)delete S.cart[k];render()});
+
+ q("[data-o]").forEach(b=>b.onclick=()=>{
+  const x={status:b.dataset.s};
+  const se=$.querySelector('[data-eta="'+b.dataset.o+'"]');
+  if(se&&x.status==="ship")x.eta=Date.now()+Number(se.value)*60000;
+  updateDoc(doc(db,"orders",b.dataset.o),x).catch(()=>toast("อัปเดตไม่สำเร็จ"));
+ });
+
+ q("[data-rs]").forEach(b=>b.onclick=()=>{
+  const id=b.dataset.rs;
+  updateDoc(doc(db,"orders",id),{reply:$.querySelector('[data-rp="'+id+'"]').value.trim()})
+   .then(()=>toast("ส่งข้อความแล้ว")).catch(()=>toast("ส่งไม่สำเร็จ"));
+ });
+
+ q("[data-r]").forEach(b=>b.onclick=()=>{
+  const[id,k]=b.dataset.r.split(":");
+  updateDoc(doc(db,"orders",id),{rating:+k}).catch(()=>toast("ให้คะแนนไม่สำเร็จ"));
+ });
+
+ q("[data-rc]").forEach(b=>b.onclick=()=>{S.rc[b.dataset.rc]=!S.rc[b.dataset.rc];render()});
+ q("[data-ro]").forEach(b=>b.onclick=()=>{
+  const o=S.orders.find(x=>x.id===b.dataset.ro);
+  S.cart={};
+  o.items.forEach(x=>{
+   const m=menu().find(m=>m.n===x.n);
+   if(m)S.cart[m.id]=x.q;
+  });
+  S.tab="menu";
+  if(!n())toast("เมนูนี้ไม่มีแล้ว");
+  render();
+ });
+
+ const M=()=>[...(S.menu||MENU)];
+ const sv=a=>setDoc(doc(db,"config","menu"),{items:a}).catch(()=>toast("บันทึกไม่สำเร็จ"));
+
+ q("[data-mt]").forEach(b=>b.onclick=()=>{
+  const a=M(),i=+b.dataset.mt;
+  a[i]={...a[i],on:a[i].on===false};
+  sv(a);
+ });
+ q("[data-md]").forEach(b=>b.onclick=()=>{
+  if(!confirm("ลบเมนูนี้?"))return;
+  const a=M();a.splice(+b.dataset.md,1);sv(a);
+ });
+ q("[data-me]").forEach(b=>b.onclick=()=>{
+  const a=M(),i=+b.dataset.me,nm=prompt("ชื่อเมนู",a[i].n);
+  if(nm===null)return;
+  const d=prompt("คำอธิบาย",a[i].d);
+  if(d===null)return;
+  a[i]={...a[i],n:nm.trim()||a[i].n,d};sv(a);
+ });
+
+ const am=document.getElementById("am");
+ if(am)am.onclick=()=>{
+  const nm=document.getElementById("an").value.trim();
+  if(!nm)return toast("ใส่ชื่อเมนูก่อน");
+  const a=M();
+  a.push({
+   id:Date.now(),c:document.getElementById("ac").value,
+   e:document.getElementById("ai").value,n:nm,
+   d:document.getElementById("ad").value.trim(),on:true
+  });
+  sv(a);
+ };
+
+ const sc=a=>setDoc(doc(db,"config","coupons"),{items:a}).catch(()=>toast("บันทึกไม่สำเร็จ"));
+ const ca=document.getElementById("cpa");
+ if(ca)ca.onclick=()=>{
+  const t=document.getElementById("ct").value.trim();
+  if(!t)return toast("ใส่ชื่อคูปองก่อน");
+  sc([...S.cp,{id:"c"+Date.now(),t,d:document.getElementById("cd").value.trim()}]);
+ };
+ q("[data-cd]").forEach(b=>b.onclick=()=>{
+  const a=[...S.cp];a.splice(+b.dataset.cd,1);sc(a);
+ });
+ q("[data-cu]").forEach(b=>b.onclick=()=>{
+  const id=b.dataset.cu;
+  if(S.cpc[id])delete S.cpc[id];else S.cpc[id]=1;
+  render();
+ });
+
+ const c=document.getElementById("cart");
+ if(c)c.onclick=checkout;
+}
+
+function checkout(){
+ const its=menu().filter(m=>S.cart[m.id]);
+ const cps=S.cp.filter(c=>S.cpc[c.id]);
+
+ $.innerHTML=head("")+`<div class="hello"><h1>ตะกร้า</h1></div>`+
+ its.map(m=>`<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b>${esc(m.n)}</b></div><b>×${S.cart[m.id]}</b></div>`).join("")+
+ cps.map(c=>`<div class="row"><div class="ic">${ico("star")}</div><div class="t"><b>${esc(c.t)}</b><small>คูปอง</small></div></div>`).join("")+
+ `<div class="row2" style="padding:14px 0"><b>รวม ${its.length} รายการ${cps.length?` + ${cps.length} คูปอง`:""}</b><small>${its.reduce((a,m)=>a+S.cart[m.id],0)} ชิ้น</small></div>`+
+ `<h2>โน้ตถึงเจ้าของร้าน (ไม่บังคับ)</h2><textarea class="field" id="note" rows="2" placeholder="เช่น ขอตอนนี้เลย"></textarea>
+ <div class="bar"><button class="btn line" id="bk" style="margin-bottom:8px">กลับไปเลือกเพิ่ม</button><button class="btn rose" id="ok">สั่งเลย</button></div>`;
+
+ document.getElementById("out").onclick=()=>signOut(auth);
+ document.getElementById("bk").onclick=render;
+
+ document.getElementById("ok").onclick=async function(){
+  this.disabled=true;
+  try{
+   const orderRef=doc(collection(db,"orders"));
+   await setDoc(orderRef,{
+    uid:S.user.uid,
+    name:S.nick||(S.user.displayName||"").split(" ")[0]||"แฟน",
+    items:its.map(m=>({n:m.n,e:m.e,q:S.cart[m.id]})),
+    note:document.getElementById("note").value.trim(),
+    coupons:cps.map(c=>({id:c.id,t:c.t})),
+    status:"new",
+    ts:Date.now(),
+    num:Number(String(Date.now()).slice(-6))
+   });
+
+   S.cart={};S.cpc={};
+   $.innerHTML=`<div class="done"><div class="ok">${ico("check")}</div><h1>กำลังจัดส่งความรัก</h1><p style="color:var(--mute)">เจ้าของร้านได้รับออเดอร์แล้ว</p></div><div class="bar"><button class="btn rose" id="tr">ดูสถานะออเดอร์</button></div>`;
+   document.getElementById("tr").onclick=()=>{S.tab="orders";render()};
+   hearts();
+  }catch(e){
+   toast("ส่งไม่สำเร็จ ("+e.code+")");
+   this.disabled=false;
+  }
+ };
+}
+
+setInterval(()=>{if(S.user)rr()},60000);
+
+(()=>{
+ try{
+  const c=document.createElement("canvas");
+  c.width=c.height=180;
+  const x=c.getContext("2d");
+  x.fillStyle="#e4456b";x.fillRect(0,0,180,180);
+  x.fillStyle="#fff";x.font="600 110px sans-serif";
+  x.textAlign="center";x.fillText("L",90,128);
+  const l=document.createElement("link");
+  l.rel="apple-touch-icon";l.href=c.toDataURL();
+  document.head.appendChild(l);
+ }catch(e){}
+})();
+</script>
+</body>
+</html>
