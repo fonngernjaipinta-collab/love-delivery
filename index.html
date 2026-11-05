@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -97,9 +96,12 @@ import {
   getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 import {
-  getFirestore,collection,setDoc,doc,updateDoc,deleteDoc,
+  getFirestore,collection,setDoc,doc,updateDoc,deleteDoc,arrayUnion,
   query,where,orderBy,limit,onSnapshot
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+import {
+  getMessaging,isSupported,getToken
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-messaging.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC25WEoTG90IS1SuxgUEtVmNtXFAmpevos",
@@ -112,6 +114,9 @@ const firebaseConfig = {
 };
 
 const OWNER_EMAIL = "fonngernjaipinta@gmail.com";
+
+/* VAPID Public Key */
+const VAPID_KEY = "BNrGsM8fPtfCPz5erE08d2-oXWO4iLEVPfVSCbFJeB5ULMv_sjgHPQZ3IQasnGkdN1YbhUAXivQw77rEIKb9KkU";
 
 const MENU=[
  {id:1,c:"ใกล้ชิด",e:"heart",n:"กอด 1 นาที",d:"กอดแน่นแน่นเลย"},
@@ -159,7 +164,7 @@ const S={
  nick:(()=>{try{return localStorage.getItem("ld_nick")||""}catch(e){return""}})(),
  user:null,owner:false,cat:"ทั้งหมด",cart:{},orders:[],
  reviews:{},ratingDraft:{},reviewDraft:{},
- tab:"menu",otab:"open",first:true,err:""
+ tab:"menu",otab:"open",first:true,err:"",push:false
 };
 
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -172,6 +177,34 @@ const toast=t=>{
 const n=()=>Object.keys(S.cart).length;
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 let unsub=null;
+let messagingInstance=null;
+
+/* ลงทะเบียนอุปกรณ์รับแจ้งเตือนของเจ้าของร้าน (silent=true คือไม่ขึ้นข้อความ ใช้ตอนต่ออายุ token อัตโนมัติ) */
+async function enableOwnerPush(silent){
+ const say=m=>{if(!silent)toast(m)};
+ if(!S.owner||!S.user)return say("เฉพาะเจ้าของร้านเท่านั้น");
+ try{
+  if(!("Notification" in window)||!("serviceWorker" in navigator))
+   return say("อุปกรณ์นี้ไม่รองรับการแจ้งเตือน (iPhone ต้องกด Add to Home Screen ก่อน)");
+  const permission=silent?Notification.permission:await Notification.requestPermission();
+  if(permission!=="granted")return say("กรุณาอนุญาตการแจ้งเตือนในการตั้งค่าอุปกรณ์");
+  if(!(await isSupported()))return say("อุปกรณ์นี้ยังไม่รองรับ Firebase Push");
+  say("กำลังตั้งค่าการแจ้งเตือน...");
+  const swReg=await navigator.serviceWorker.register("firebase-messaging-sw.js");
+  await navigator.serviceWorker.ready;
+  messagingInstance=messagingInstance||getMessaging(app);
+  const token=await getToken(messagingInstance,{vapidKey:VAPID_KEY,serviceWorkerRegistration:swReg});
+  if(!token)throw new Error("ไม่สามารถสร้าง Notification Token ได้");
+  await setDoc(doc(db,"ownerTokens",S.user.uid),{
+   uid:S.user.uid,email:S.user.email,tokens:arrayUnion(token),updatedAt:Date.now()
+  },{merge:true});
+  S.push=true;
+  say("เปิดรับการแจ้งเตือนเรียบร้อยแล้ว");
+ }catch(e){
+  console.error("Push notification error:",e);
+  say("ตั้งค่าไม่สำเร็จ: "+(e.code||e.message||"Unknown error"));
+ }
+}
 
 const ICN={
  heart:"หัวใจ",smile:"ยิ้ม",spark:"ประกาย",pin:"หมุด",
@@ -188,7 +221,7 @@ const ping=t=>{
  if(!t)return;
  toast(t);
  try{
-  if("Notification" in window&&Notification.permission==="granted"&&document.hidden)
+  if(!S.push&&"Notification" in window&&Notification.permission==="granted"&&document.hidden)
    new Notification("Love Delivery",{body:t});
  }catch(x){}
 };
@@ -303,6 +336,10 @@ onAuthStateChanged(auth,u=>{
   });
 
   unsub=()=>{u1();u2();u3();u4()};
+
+  /* ต่ออายุ token แจ้งเตือนของเจ้าของร้านอัตโนมัติ ถ้าเคยอนุญาตไว้แล้ว */
+  S.push=false;
+  if(S.owner&&"Notification" in window&&Notification.permission==="granted")enableOwnerPush(true);
  }
  render();
 });
@@ -331,7 +368,14 @@ function login(){
  };
 }
 
-const head=r=>`<div class="top"><span class="logo">Love<i>.</i>Delivery</span><span>${("Notification" in window&&Notification.permission==="default")?'<button class="link" id="nt">เปิดแจ้งเตือน</button> · ':""}<button class="link" id="out">${r?r+" · ":""}ออกจากระบบ</button></span></div>`;
+/* ปุ่มตั้งค่าแจ้งเตือนจะแสดงเฉพาะเจ้าของร้าน */
+const head=r=>`<div class="top">
+ <span class="logo">Love<i>.</i>Delivery</span>
+ <span>
+  ${S.owner?'<button class="link" id="nt">ตั้งค่าแจ้งเตือน</button> · ':""}
+  <button class="link" id="out">${r?r+" · ":""}ออกจากระบบ</button>
+ </span>
+</div>`;
 
 function track(o){
  const i=ST.findIndex(s=>s[0]===o.status);
@@ -412,8 +456,10 @@ function bind(){
  const q=s=>$.querySelectorAll(s);
  const out=document.getElementById("out");
  if(out)out.onclick=()=>{S.cart={};signOut(auth)};
+
+ /* ปุ่มตั้งค่าแจ้งเตือนของเจ้าของร้าน */
  const nt=document.getElementById("nt");
- if(nt)nt.onclick=()=>Notification.requestPermission().then(render);
+ if(nt)nt.onclick=()=>enableOwnerPush(false);
 
  q("[data-c]").forEach(b=>b.onclick=()=>{S.cat=b.dataset.c;render()});
  q("[data-t]").forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;render()});
@@ -468,7 +514,7 @@ function bind(){
    });
    delete S.ratingDraft[id];
    delete S.reviewDraft[id];
-   toast("ขอบคุณสำหรับรีวิวนะ ❤️");
+   toast("ขอบคุณสำหรับรีวิวนะ");
   }catch(e){
    console.error(e);
    toast("ส่งรีวิวไม่สำเร็จ ("+e.code+")");
