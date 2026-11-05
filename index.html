@@ -112,8 +112,6 @@ const firebaseConfig = {
 
 const OWNER_EMAIL = "fonngernjaipinta@gmail.com";
 
-/* หัวข้อแจ้งเตือนของแอป ntfy (เหมือนรหัสลับ อย่าแชร์ให้คนอื่น) */
-const NTFY_TOPIC = "ld-7416459f8abb7277";
 /* VAPID Public Key */
 const VAPID_KEY = "BNrGsM8fPtfCPz5erE08d2-oXWO4iLEVPfVSCbFJeB5ULMv_sjgHPQZ3IQasnGkdN1YbhUAXivQw77rEIKb9KkU";
 
@@ -166,6 +164,8 @@ const S={
  tab:"menu",otab:"open",first:true,err:"",push:false
 };
 
+S.notif=(()=>{try{return localStorage.getItem("ld_notif")==="1"&&"Notification" in window&&Notification.permission==="granted"}catch(e){return false}})();
+if(S.notif&&"serviceWorker" in navigator)navigator.serviceWorker.register("firebase-messaging-sw.js").catch(()=>{});
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const toast=t=>{
  const e=document.createElement("div");
@@ -188,14 +188,35 @@ const greet=()=>{
  const h=new Date().getHours();
  return h<5?"ยังไม่นอนอีกเหรอ":h<12?"อรุณสวัสดิ์":h<17?"สวัสดียามบ่าย":h<21?"สวัสดียามเย็น":"ใกล้เวลานอนแล้วนะ";
 };
+const showSys=async t=>{
+ try{
+  const reg=await navigator.serviceWorker.getRegistration();
+  if(reg)await reg.showNotification("Love Delivery",{body:t});
+  else new Notification("Love Delivery",{body:t});
+ }catch(x){}
+};
 const ping=t=>{
  if(!t)return;
  toast(t);
- try{
-  if(!S.push&&"Notification" in window&&Notification.permission==="granted"&&document.hidden)
-   new Notification("Love Delivery",{body:t});
- }catch(x){}
+ if(S.notif&&document.hidden)showSys(t);
 };
+async function toggleNotif(){
+ if(S.notif){
+  S.notif=false;
+  try{localStorage.setItem("ld_notif","0")}catch(x){}
+  toast("ปิดแจ้งเตือนแล้ว");
+  return render();
+ }
+ if(!("Notification" in window)||!("serviceWorker" in navigator))
+  return toast("อุปกรณ์นี้ไม่รองรับ (iPhone ต้องกด Add to Home Screen ก่อน)");
+ const p=await Notification.requestPermission();
+ if(p!=="granted")return toast("กรุณาอนุญาตการแจ้งเตือนในการตั้งค่าอุปกรณ์");
+ try{await navigator.serviceWorker.register("firebase-messaging-sw.js")}catch(e){}
+ S.notif=true;
+ try{localStorage.setItem("ld_notif","1")}catch(x){}
+ toast("เปิดแจ้งเตือนแล้ว");
+ render();
+}
 const rr=()=>{
  if(!document.getElementById("note")&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))render();
 };
@@ -340,7 +361,7 @@ function login(){
 const head=r=>`<div class="top">
  <span class="logo">Love<i>.</i>Delivery</span>
  <span>
-  ${S.owner?'<button class="link" id="nt">แจ้งเตือน</button> · ':""}
+  <button class="link" id="nt">แจ้งเตือน: ${S.notif?"เปิด":"ปิด"}</button> · 
   <button class="link" id="out">${r?r+" · ":""}ออกจากระบบ</button>
  </span>
 </div>`;
@@ -427,7 +448,7 @@ function bind(){
 
  /* ปุ่มตั้งค่าแจ้งเตือนของเจ้าของร้าน */
  const nt=document.getElementById("nt");
- if(nt)nt.onclick=()=>prompt("คัดลอกข้อความนี้ไปใส่ในแอป ntfy (ช่อง Topic name)",NTFY_TOPIC);
+ if(nt)nt.onclick=toggleNotif;
 
  q("[data-c]").forEach(b=>b.onclick=()=>{S.cat=b.dataset.c;render()});
  q("[data-t]").forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;render()});
@@ -582,6 +603,7 @@ function checkout(){
  <div class="bar"><button class="btn line" id="bk" style="margin-bottom:8px">กลับไปเลือกเพิ่ม</button><button class="btn rose" id="ok">สั่งเลย</button></div>`;
 
  document.getElementById("out").onclick=()=>signOut(auth);
+ const n2=document.getElementById("nt");if(n2)n2.onclick=toggleNotif;
  document.getElementById("bk").onclick=()=>{render()};
 
  document.getElementById("ok").onclick=async function(){
@@ -599,14 +621,6 @@ function checkout(){
     ts:Date.now(),
     num
    });
-
-   const hhmm=new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
-   fetch("https://ntfy.sh",{method:"POST",keepalive:true,body:JSON.stringify({
-    topic:NTFY_TOPIC,
-    title:"ออเดอร์ใหม่ #"+String(num).padStart(3,"0")+" จาก "+(S.nick||"ลูกค้า"),
-    message:([...its.map(m=>m.n+" ×"+S.cart[m.id]),...cps.map(c=>"คูปอง: "+c.t)].join(", ")||"มีออเดอร์ใหม่")+" ("+hhmm+")",
-    priority:5,tags:["heart"],click:location.origin
-   })}).catch(()=>{});
 
    S.cart={};S.cpc={};
    $.innerHTML=`<div class="done"><div class="ok">${ico("check")}</div><h1>กำลังจัดส่งความรัก</h1><p style="color:var(--mute)">เจ้าของร้านได้รับออเดอร์แล้ว</p></div><div class="bar"><button class="btn rose" id="tr">ดูสถานะออเดอร์</button></div>`;
