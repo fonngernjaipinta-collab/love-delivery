@@ -1,4 +1,3 @@
-// วางไฟล์นี้ไว้โฟลเดอร์เดียวกับ index.html (ชื่อต้องเป็น firebase-messaging-sw.js เป๊ะ)
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", e => e.waitUntil(self.clients.claim()));
 
