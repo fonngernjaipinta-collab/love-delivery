@@ -42,8 +42,8 @@ h2{font-size:13px;font-weight:500;color:var(--mute);margin:26px 0 4px}
 .lb{text-align:left;font-size:13px;color:var(--mute);margin-bottom:-8px}
 .login p{color:var(--mute);margin:0 0 14px}
 .card{border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
-.card .h{display:flex;justify-content:space-between;align-items:baseline}
-.card .h b{font-weight:600}.card .h small{color:var(--mute)}
+.card .h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card .h b{font-weight:600}.card .h small{color:var(--mute);white-space:nowrap}
 .it{margin:8px 0 0;padding:0;list-style:none}.it li{display:flex;justify-content:space-between;padding:2px 0}
 .note{margin-top:8px;padding:8px 12px;background:var(--soft);border-radius:10px;font-size:13px;color:var(--mute)}
 .trk{display:flex;margin:16px 0 4px}
@@ -55,7 +55,7 @@ h2{font-size:13px;font-weight:500;color:var(--mute);margin:26px 0 4px}
 .s.n{color:var(--rose);font-weight:500}.s.n i{background:var(--rose);box-shadow:0 0 0 4px var(--rose-s)}.s.n::before{background:var(--ok)}
 .go{margin-top:12px;width:100%;padding:11px;border-radius:12px;background:var(--rose);color:#fff;font-weight:500}
 .empty{text-align:center;color:var(--mute);padding:48px 0}
-.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 12px);transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;z-index:9;animation:in .3s}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 12px);transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;z-index:9;animation:in .3s;max-width:90%;text-align:center}
 @keyframes in{from{opacity:0;transform:translate(-50%,-12px)}}
 .field{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;margin-top:8px;resize:none}
 .mark svg,.ok svg{width:32px;height:32px}.done{text-align:center;padding:70px 0 20px}.done .ok{color:var(--rose);width:64px;height:64px;border-radius:50%;background:var(--rose-s);display:grid;place-items:center;margin:0 auto 18px;font-size:30px;animation:pop .5s}
@@ -76,6 +76,15 @@ h2{font-size:13px;font-weight:500;color:var(--mute);margin:26px 0 4px}
 .tks{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px}
 .tk{flex:none;width:260px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 20px;background:var(--rose-s);border-radius:14px;-webkit-mask:radial-gradient(circle 8px at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 8px at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 8px at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 8px at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat}
 .tk b{display:block;color:var(--rose)}.tk small{color:var(--mute);display:block}.tk button{flex:none;border-radius:99px;background:var(--rose);color:#fff;padding:6px 14px;font-weight:500}.tk.u{opacity:.45}.tk.u button{background:var(--mute);pointer-events:none}
+.review-box{margin-top:12px;padding:12px;border-radius:13px;background:var(--soft)}
+.review-box .stars{margin:0}
+.review-text{margin-top:7px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.review-form{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:14px}
+.review-form p{margin:0;color:var(--mute);font-size:13px}
+.review-form .field{margin-top:8px}
+.review-submit{margin-top:8px;width:100%;padding:10px;border-radius:11px;background:var(--rose);color:white}
+.review-meta{font-size:12px;color:var(--mute);margin-top:5px}
+.del-order{width:100%;margin-top:10px;padding:10px;border:1px solid #f3c5d0;border-radius:11px;color:var(--rose);font-size:13px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
@@ -88,7 +97,8 @@ import {
   getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 import {
-  getFirestore,collection,setDoc,doc,updateDoc,query,where,orderBy,limit,onSnapshot
+  getFirestore,collection,setDoc,doc,updateDoc,deleteDoc,
+  query,where,orderBy,limit,onSnapshot
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -143,14 +153,16 @@ const CATS=["ทั้งหมด","ใกล้ชิด","เดท","บร�
 const ST=[["new","รับออเดอร์"],["prep","กำลังเตรียม"],["ship","กำลังจัดส่ง"],["done","ส่งถึงแล้ว"]];
 const NEXT={new:"เริ่มเตรียม",prep:"ออกจัดส่ง",ship:"ส่งถึงแล้ว"};
 const $=document.getElementById("app");
+
 const S={
  rp:{},rc:{},cp:[],cpc:{},menu:null,
  nick:(()=>{try{return localStorage.getItem("ld_nick")||""}catch(e){return""}})(),
  user:null,owner:false,cat:"ทั้งหมด",cart:{},orders:[],
+ reviews:{},ratingDraft:{},reviewDraft:{},
  tab:"menu",otab:"open",first:true,err:""
 };
 
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const toast=t=>{
  const e=document.createElement("div");
  e.className="toast";e.textContent=t;document.body.appendChild(e);
@@ -173,6 +185,7 @@ const greet=()=>{
  return h<5?"ยังไม่นอนอีกเหรอ":h<12?"อรุณสวัสดิ์":h<17?"สวัสดียามบ่าย":h<21?"สวัสดียามเย็น":"ใกล้เวลานอนแล้วนะ";
 };
 const ping=t=>{
+ if(!t)return;
  toast(t);
  try{
   if("Notification" in window&&Notification.permission==="granted"&&document.hidden)
@@ -187,7 +200,7 @@ const etaTxt=e=>{
  const ms=e-Date.now(),d=new Date(e);
  return ms>=864e5?"อีก "+Math.ceil(ms/864e5)+" วัน · ถึงวันที่ "+d.toLocaleDateString("th-TH",{day:"numeric",month:"short"})+" เวลา "+hm(e)+" น.":ms>0?"ถึงโดยประมาณ "+hm(e)+" น.":"ใกล้ถึงแล้ว";
 };
-const stars=(n,id)=>[1,2,3,4,5].map(k=>`<button class="sb${k<=n?" on":""}" ${id?`data-r="${id}:${k}"`:"disabled"} aria-label="${k} ดาว">${ico("star")}</button>`).join("");
+const stars=(value,id)=>[1,2,3,4,5].map(k=>`<button class="sb${k<=value?" on":""}" ${id?`data-r="${id}:${k}"`:"disabled"} aria-label="${k} ดาว">${ico("star")}</button>`).join("");
 
 function hearts(){
  for(let k=0;k<10;k++){
@@ -209,16 +222,16 @@ function promoBox(){
 }
 
 function statsView(){
- const L=S.orders,done=L.filter(o=>o.status==="done").length,cnt={},rs=[];
+ const L=S.orders,done=L.filter(o=>o.status==="done").length,cnt={};
  let tot=0;
- L.forEach(o=>{
-  (o.items||[]).forEach(x=>{cnt[x.n]=(cnt[x.n]||0)+x.q;tot+=x.q});
-  if(o.rating)rs.push(o.rating);
- });
+ L.forEach(o=>(o.items||[]).forEach(x=>{cnt[x.n]=(cnt[x.n]||0)+x.q;tot+=x.q}));
  const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
- const avg=rs.length?(rs.reduce((a,b)=>a+b,0)/rs.length).toFixed(1):"-";
+ const reviews=Object.values(S.reviews);
+ const legacy=L.filter(o=>o.rating&&!S.reviews[o.id]).map(o=>Number(o.rating));
+ const scores=[...reviews.map(r=>Number(r.rating)),...legacy].filter(x=>x>=1&&x<=5);
+ const avg=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1):"-";
  const g=(v,l)=>`<div class="stat"><b>${v}</b><small>${l}</small></div>`;
- return `<div class="grid">${g(L.length,"ออเดอร์ทั้งหมด")}${g(tot,"รายการที่สั่ง")}${g(top?esc(top[0]):"-","สั่งบ่อยที่สุด")}${g(avg,"คะแนนเฉลี่ย")}</div>`;
+ return `<div class="grid">${g(L.length,"ออเดอร์ทั้งหมด")}${g(tot,"รายการที่สั่ง")}${g(top?esc(top[0]):"-","สั่งบ่อยที่สุด")}${g(avg,"คะแนนเฉลี่ย")}${g(reviews.length,"รีวิวที่บันทึกถาวร")}</div>`;
 }
 
 function menuEd(){
@@ -226,15 +239,24 @@ function menuEd(){
  return `<h2>โปรโมชั่น / คูปอง</h2>`+
  S.cp.map((c,i)=>`<div class="row"><div class="ic">${ico("star")}</div><div class="t"><b>${esc(c.t)}</b><small>${esc(c.d||"")}</small></div><button class="link" data-cd="${i}">ลบ</button></div>`).join("")+
  `<input class="field" id="ct" placeholder="ชื่อคูปอง เช่น กอดฟรีเพิ่ม 1 ครั้ง"><input class="field" id="cd" placeholder="รายละเอียดสั้นๆ (ไม่บังคับ)"><button class="btn rose" id="cpa">ออกคูปอง</button><h2>เมนู (${M.length})</h2>`+
- M.map((m,i)=>`<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b style="${m.on===false?"opacity:.4":""}">${esc(m.n)}</b><small>${m.c}</small></div><button class="link" data-me="${i}">แก้</button><button class="link" data-mt="${i}">${m.on===false?"เปิด":"ซ่อน"}</button><button class="link" data-md="${i}">ลบ</button></div>`).join("")+
+ M.map((m,i)=>`<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b style="${m.on===false?"opacity:.4":""}">${esc(m.n)}</b><small>${esc(m.c)}</small></div><button class="link" data-me="${i}">แก้</button><button class="link" data-mt="${i}">${m.on===false?"เปิด":"ซ่อน"}</button><button class="link" data-md="${i}">ลบ</button></div>`).join("")+
  `<h2>เพิ่มเมนูใหม่</h2><input class="field" id="an" placeholder="ชื่อเมนู"><input class="field" id="ad" placeholder="คำอธิบายสั้นๆ"><select class="field" id="ac">${CATS.slice(1).map(c=>`<option>${c}</option>`).join("")}</select><select class="field" id="ai">${Object.keys(ICN).map(k=>`<option value="${k}">ไอคอน${ICN[k]}</option>`).join("")}</select><button class="btn rose" id="am">เพิ่มเมนู</button>`;
+}
+
+function reviewHistory(){
+ const list=Object.entries(S.reviews).map(([id,r])=>({id,...r})).sort((a,b)=>(b.ts||0)-(a.ts||0));
+ if(!list.length)return `<div class="empty">ยังไม่มีรีวิวที่บันทึกไว้</div>`;
+ return `<h2>รีวิวทั้งหมด ${list.length} รายการ</h2>`+list.map(r=>{
+  const d=r.ts?new Date(r.ts).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"}):"";
+  return `<div class="card"><div class="h"><b>${esc(r.name||"ลูกค้า")}</b><small>${d}</small></div><div class="review-box"><div class="stars">${stars(Number(r.rating)||0)}</div><div class="review-text">${esc(r.text||"ไม่ได้เขียนข้อความ")}</div></div><div class="review-meta">ออเดอร์ #${esc(String(r.orderNum||r.orderId||"").slice(-8))}</div></div>`;
+ }).join("");
 }
 
 onAuthStateChanged(auth,u=>{
  S.user=u;
  S.owner=!!u&&u.email&&u.email.toLowerCase()===OWNER_EMAIL.toLowerCase();
  if(unsub){unsub();unsub=null}
- S.orders=[];S.first=true;
+ S.orders=[];S.reviews={};S.first=true;
 
  if(u){
   const col=collection(db,"orders");
@@ -263,7 +285,24 @@ onAuthStateChanged(auth,u=>{
   const u3=onSnapshot(doc(db,"config","menu"),s=>{
    S.menu=s.exists()?s.data().items:null;rr();
   },()=>{});
-  unsub=()=>{u1();u2();u3()};
+
+  const reviewCol=collection(db,"reviews");
+  const reviewQuery=S.owner
+   ?query(reviewCol,orderBy("ts","desc"),limit(200))
+   :query(reviewCol,where("uid","==",u.uid));
+
+  const u4=onSnapshot(reviewQuery,snap=>{
+   const map={};
+   snap.docs.forEach(x=>map[x.id]=x.data());
+   S.reviews=map;
+   rr();
+  },e=>{
+   console.error("Review listener:",e);
+   S.err="อ่านรีวิวไม่ได้: "+e.code;
+   render();
+  });
+
+  unsub=()=>{u1();u2();u3();u4()};
  }
  render();
 });
@@ -304,19 +343,29 @@ const no=o=>"#"+(o.num?String(o.num).padStart(3,"0"):o.id.slice(-4).toUpperCase(
 function card(o,own){
  const t=new Date(o.ts).toLocaleString("th-TH",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
  const i=ST.findIndex(s=>s[0]===o.status),dn=i===3;
+ const review=S.reviews[o.id];
  let h=`<div class="card"><div class="h"><b>${own?esc(o.name)+" · "+no(o):"ออเดอร์ "+no(o)}</b><small>${t}</small></div>
  <ul class="it">${(o.items||[]).map(x=>`<li><span>${ico(x.e)} ${esc(x.n)}</span><span>×${x.q}</span></li>`).join("")}</ul>
  ${(o.coupons||[]).map(c=>`<div class="note" style="background:var(--rose-s);color:var(--rose)">ใช้คูปอง: ${esc(c.t)}</div>`).join("")}${o.note?`<div class="note">${esc(o.note)}</div>`:""}${track(o)}`;
 
  if(o.status==="ship"&&o.eta)h+=`<div class="eta">${etaTxt(o.eta)}</div>`;
  if(o.reply)h+=`<div class="note" style="background:var(--rose-s);color:var(--rose)">ฝน: ${esc(o.reply)}</div>`;
- if(o.rating)h+=`<div class="stars">${stars(o.rating)}</div>`;
+
+ if(review){
+  h+=`<div class="review-box"><b style="font-size:13px">รีวิวจากลูกค้า</b><div class="stars">${stars(Number(review.rating)||0)}</div><div class="review-text">${esc(review.text||"ไม่ได้เขียนข้อความ")}</div></div>`;
+ }else if(o.rating){
+  h+=`<div class="review-box"><small>คะแนนเดิม</small><div class="stars">${stars(Number(o.rating))}</div></div>`;
+ }
 
  if(own){
-  if(!dn)h+=(o.status==="prep"?`<select class="field" data-eta="${o.id}" style="margin:12px 0 0">${[5,10,15,20,30,45].map(m=>`<option value="${m}">ถึงใน ${m} นาที</option>`).join("")+[1,2,3,4,5].map(d=>`<option value="${d*1440}">อีก ${d} วัน</option>`).join("")}</select>`:"")+`<button class="go" data-o="${o.id}" data-s="${ST[i+1][0]}">${NEXT[o.status]}</button>`;
+  if(!dn)h+=(o.status==="prep"?`<select class="field" data-eta="${o.id}" style="margin:12px 0 0">${[5,10,15,20,30,45].map(m=>`<option value="${m}">ถึงใน ${m} นาที</option>`).join("")+[1,2,3,4,5,6,7,8,9,10].map(d=>`<option value="${d*1440}">อีก ${d} วัน</option>`).join("")}</select>`:"")+`<button class="go" data-o="${o.id}" data-s="${ST[i+1][0]}">${NEXT[o.status]}</button>`;
   h+=`<div style="display:flex;gap:8px;margin-top:10px"><input class="field" data-rp="${o.id}" style="margin:0" maxlength="80" placeholder="ตอบกลับสั้นๆ" value="${esc(o.reply||"")}"><button class="go" data-rs="${o.id}" style="margin:0;width:auto;padding:0 18px">ส่ง</button></div>`;
+  h+=`<button class="del-order" data-del-order="${o.id}">ลบออเดอร์นี้</button>`;
  }else{
-  if(dn&&!o.rating)h+=`<div class="rate"><small>ให้คะแนนออเดอร์นี้</small><div>${stars(0,o.id)}</div></div>`;
+  if(dn&&!review){
+   const draft=Number(S.ratingDraft[o.id])||0;
+   h+=`<div class="review-form"><p>ให้คะแนนออเดอร์นี้</p><div class="stars">${stars(draft,o.id)}</div><textarea class="field" data-review-text="${o.id}" rows="2" maxlength="500" placeholder="เขียนรีวิวถึงเจ้าของร้าน (ไม่บังคับ)">${esc(S.reviewDraft[o.id]||"")}</textarea><button class="review-submit" data-review-submit="${o.id}">ส่งรีวิว</button></div>`;
+  }
   h+=`<div style="display:flex;gap:8px;margin-top:12px">${dn?`<button class="btn line" data-rc="${o.id}" style="padding:10px">ใบเสร็จ</button>`:""}<button class="btn line" data-ro="${o.id}" style="padding:10px">สั่งอีกครั้ง</button></div>`;
   if(S.rc[o.id])h+=`<div class="rcpt"><b>Love Delivery</b><div>${no(o)} · ${t}</div>${(o.items||[]).map(x=>`<div class="r2"><span>${esc(x.n)}</span><span>×${x.q}</span></div>`).join("")}${(o.coupons||[]).map(c=>`<div class="r2"><span>คูปอง: ${esc(c.t)}</span><span>ใช้แล้ว</span></div>`).join("")}<div class="r2"><b>ยอดรวม</b><b>${(o.items||[]).reduce((a,x)=>a+x.q,0)} หัวใจ</b></div><div style="text-align:center;margin-top:8px">ขอบคุณที่มาอุดหนุนนะ<br>ลงชื่อ ฝน</div></div>`;
  }
@@ -348,9 +397,10 @@ function customer(){
 function owner(){
  const open=S.orders.filter(o=>o.status!=="done");
  const done=S.orders.filter(o=>o.status==="done"),T=S.otab;
- let h=head("เจ้าของร้าน")+`<div class="hello"><h1>ออเดอร์</h1></div><div class="seg">${[["open","รอ"+(open.length?`<span class="badge">${open.length}</span>`:"")],["done","ส่งแล้ว"],["menu","เมนู"],["stats","สถิติ"]].map(t=>`<button data-ot="${t[0]}" class="${T===t[0]?"on":""}">${t[1]}</button>`).join("")}</div>`;
+ let h=head("เจ้าของร้าน")+`<div class="hello"><h1>ออเดอร์</h1></div><div class="seg">${[["open","รอ"+(open.length?`<span class="badge">${open.length}</span>`:"")],["done","ส่งแล้ว"],["menu","เมนู"],["stats","สถิติ"],["reviews","รีวิว"]].map(t=>`<button data-ot="${t[0]}" class="${T===t[0]?"on":""}">${t[1]}</button>`).join("")}</div>`;
  if(T==="menu")h+=menuEd();
  else if(T==="stats")h+=statsView();
+ else if(T==="reviews")h+=reviewHistory();
  else{
   const l=T==="open"?open:done;
   h+=l.length?l.map(o=>card(o,true)).join(""):`<div class="empty">ยังไม่มีออเดอร์</div>`;
@@ -386,7 +436,58 @@ function bind(){
 
  q("[data-r]").forEach(b=>b.onclick=()=>{
   const[id,k]=b.dataset.r.split(":");
-  updateDoc(doc(db,"orders",id),{rating:+k}).catch(()=>toast("ให้คะแนนไม่สำเร็จ"));
+  S.ratingDraft[id]=Number(k);
+  const o=S.orders.find(x=>x.id===id);
+  if(o)render();
+ });
+
+ q("[data-review-text]").forEach(el=>el.addEventListener("input",()=>{
+  S.reviewDraft[el.dataset.reviewText]=el.value;
+ }));
+
+ q("[data-review-submit]").forEach(b=>b.onclick=async()=>{
+  const id=b.dataset.reviewSubmit;
+  const o=S.orders.find(x=>x.id===id);
+  const rating=Number(S.ratingDraft[id]);
+  const textValue=(S.reviewDraft[id]||"").trim();
+
+  if(!o||o.status!=="done")return toast("ออเดอร์นี้ยังรีวิวไม่ได้");
+  if(!rating)return toast("เลือกคะแนนก่อนนะ");
+  if(S.reviews[id])return toast("ออเดอร์นี้รีวิวแล้ว");
+
+  b.disabled=true;
+  try{
+   await setDoc(doc(db,"reviews",id),{
+    orderId:id,
+    orderNum:o.num||null,
+    uid:S.user.uid,
+    name:S.nick||(S.user.displayName||"").split(" ")[0]||"ลูกค้า",
+    rating,
+    text:textValue,
+    ts:Date.now()
+   });
+   delete S.ratingDraft[id];
+   delete S.reviewDraft[id];
+   toast("ขอบคุณสำหรับรีวิวนะ ❤️");
+  }catch(e){
+   console.error(e);
+   toast("ส่งรีวิวไม่สำเร็จ ("+e.code+")");
+   b.disabled=false;
+  }
+ });
+
+ q("[data-del-order]").forEach(b=>b.onclick=async()=>{
+  const id=b.dataset.delOrder;
+  if(!confirm("ยืนยันลบออเดอร์นี้ใช่ไหม?\n\nรีวิวของออเดอร์นี้จะยังถูกเก็บไว้"))return;
+  b.disabled=true;
+  try{
+   await deleteDoc(doc(db,"orders",id));
+   toast("ลบออเดอร์แล้ว รีวิวเดิมยังอยู่");
+  }catch(e){
+   console.error(e);
+   toast("ลบออเดอร์ไม่สำเร็จ ("+e.code+")");
+   b.disabled=false;
+  }
  });
 
  q("[data-rc]").forEach(b=>b.onclick=()=>{S.rc[b.dataset.rc]=!S.rc[b.dataset.rc];render()});
@@ -467,7 +568,7 @@ function checkout(){
  <div class="bar"><button class="btn line" id="bk" style="margin-bottom:8px">กลับไปเลือกเพิ่ม</button><button class="btn rose" id="ok">สั่งเลย</button></div>`;
 
  document.getElementById("out").onclick=()=>signOut(auth);
- document.getElementById("bk").onclick=render;
+ document.getElementById("bk").onclick=()=>{render()};
 
  document.getElementById("ok").onclick=async function(){
   this.disabled=true;
