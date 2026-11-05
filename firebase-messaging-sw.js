@@ -1,54 +1,25 @@
+// วางไฟล์นี้ไว้โฟลเดอร์เดียวกับ index.html (ชื่อต้องเป็น firebase-messaging-sw.js เป๊ะ)
+self.addEventListener("install", () => self.skipWaiting());
+self.addEventListener("activate", e => e.waitUntil(self.clients.claim()));
 
-importScripts("https://www.gstatic.com/firebasejs/13.2.0/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/13.2.0/firebase-messaging-compat.js");
-
-firebase.initializeApp({
-  apiKey: "AIzaSyC25WEoTG90IS1SuxgUEtVmNtXFAmpevos",
-  authDomain: "lovedelivery.firebaseapp.com",
-  projectId: "lovedelivery",
-  storageBucket: "lovedelivery.firebasestorage.app",
-  messagingSenderId: "747278269239",
-  appId: "1:747278269239:web:b0c7daecea0820ceb038b2",
-  measurementId: "G-HYRY00ZYRZ"
+self.addEventListener("push", e => {
+  let p = {};
+  try { p = e.data ? e.data.json() : {}; } catch (x) {}
+  const n = p.notification || {}, d = p.data || {};
+  e.waitUntil(
+    self.registration.showNotification(n.title || d.title || "Love Delivery", {
+      body: n.body || d.body || "มีออเดอร์ใหม่เข้ามา",
+      data: { url: "./" }
+    })
+  );
 });
 
-const messaging = firebase.messaging();
-
-messaging.onBackgroundMessage((payload) => {
-  const title =
-    payload.notification?.title ||
-    payload.data?.title ||
-    "Love Delivery";
-
-  const options = {
-    body:
-      payload.notification?.body ||
-      payload.data?.body ||
-      "มีออเดอร์ใหม่เข้ามา",
-    icon: "/icon-192.png",
-    data: {
-      url: "/"
-    }
-  };
-
-  self.registration.showNotification(title, options);
-});
-
-self.addEventListener("notificationclick", (event) => {
-  event.notification.close();
-
-  event.waitUntil(
-    clients.matchAll({
-      type: "window",
-      includeUncontrolled: true
-    }).then((clientList) => {
-      for (const client of clientList) {
-        if ("focus" in client) {
-          return client.focus();
-        }
-      }
-
-      return clients.openWindow("/");
+self.addEventListener("notificationclick", e => {
+  e.notification.close();
+  e.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(list => {
+      for (const c of list) if ("focus" in c) return c.focus();
+      return self.clients.openWindow((e.notification.data && e.notification.data.url) || "./");
     })
   );
 });
