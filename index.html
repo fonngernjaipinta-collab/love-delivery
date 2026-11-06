@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Love Delivery">
-<meta name="theme-color" content="#ffffff">
-<meta name="robots" content="noindex, nofollow, noarchive">
 <title>Love Delivery</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1c1c1e;--mute:#8a8a90;--line:#ececf0;--bg:#fff;--soft:#f6f6f8;--rose:#e4456b;--rose-s:#fdeef2;--ok:#2fa36b}
+:root{--ink:#1c1c1e;--mute:#8a8a90;--line:#ececf0;--bg:#fff;--soft:#f6f6f8;--rose:#e4456b;--rose-s:#fdeef2;--ok:#2fa36b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Thai',system-ui,sans-serif;font-size:15px;line-height:1.5}
-#app{max-width:480px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 14px) 20px calc(110px + env(safe-area-inset-bottom,0px))}
+#app{max-width:480px;margin:0 auto;padding:14px 20px 110px}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
 h1{font-size:28px;font-weight:600;letter-spacing:-.01em;margin:0}
@@ -23,9 +23,9 @@ h2{font-size:13px;font-weight:500;color:var(--mute);margin:26px 0 4px}
 .logo{font-weight:600;font-size:17px}.logo i{color:var(--rose);font-style:normal}
 .link{color:var(--mute);font-size:14px}
 .hello{margin:18px 0 6px}.hello p{margin:4px 0 0;color:var(--mute)}
-.seg{display:flex;background:var(--soft);border-radius:12px;padding:3px;margin:18px 0 4px}
-.seg button{flex:1;padding:8px;border-radius:10px;color:var(--mute);font-weight:500}
-.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.seg{display:flex;background:var(--soft);border-radius:12px;padding:3px;margin:18px 0 4px;overflow-x:auto}
+.seg button{flex:1 0 auto;padding:8px 10px;white-space:nowrap;border-radius:10px;color:var(--mute);font-weight:500}
+.seg button.on{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .badge{display:inline-block;background:var(--rose);color:#fff;border-radius:99px;font-size:11px;padding:0 6px;margin-left:5px}
 .row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
 .ic{color:var(--rose);flex:none;width:46px;height:46px;border-radius:14px;background:var(--soft);display:grid;place-items:center;font-size:22px}
@@ -35,7 +35,7 @@ h2{font-size:13px;font-weight:500;color:var(--mute);margin:26px 0 4px}
 .rb.g{background:var(--soft);color:var(--ink)}
 .bar{position:fixed;left:0;right:0;bottom:0;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
 .btn{display:block;width:100%;max-width:440px;margin:0 auto;padding:14px;border-radius:14px;background:var(--ink);color:#fff;font-weight:500;text-align:center}
-.btn.rose{background:var(--rose)}.btn.line{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.rose{background:var(--rose)}.btn.line{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
 .btn:disabled{opacity:.5}
 .login{min-height:80vh;display:flex;flex-direction:column;justify-content:center;gap:14px;text-align:center}
 .login .mark{color:var(--rose);width:72px;height:72px;margin:0 auto 6px;border-radius:22px;background:var(--rose-s);display:grid;place-items:center;font-size:34px}
@@ -57,11 +57,10 @@ h2{font-size:13px;font-weight:500;color:var(--mute);margin:26px 0 4px}
 .empty{text-align:center;color:var(--mute);padding:48px 0}
 .toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 12px);transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;z-index:9;animation:in .3s;max-width:90%;text-align:center}
 @keyframes in{from{opacity:0;transform:translate(-50%,-12px)}}
-.field{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;margin-top:8px;resize:none}
+.field{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;margin-top:8px;resize:none;background:var(--bg);color:var(--ink)}
 .mark svg,.ok svg{width:32px;height:32px}.done{text-align:center;padding:70px 0 20px}.done .ok{color:var(--rose);width:64px;height:64px;border-radius:50%;background:var(--rose-s);display:grid;place-items:center;margin:0 auto 18px;font-size:30px;animation:pop .5s}
 @keyframes pop{from{transform:scale(.5);opacity:0}}
 .err{color:var(--rose);font-size:13px}
-.promo{margin-top:14px;padding:12px 14px;border-radius:14px;background:var(--rose-s);color:var(--rose);font-weight:500}
 .loy{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px}
 .row2{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.row2 small{color:var(--mute);text-align:right}
 .pb{height:6px;border-radius:9px;background:var(--soft);margin-top:8px;overflow:hidden}.pb i{display:block;height:100%;background:var(--rose);border-radius:9px;transition:width .6s}
@@ -69,37 +68,60 @@ h2{font-size:13px;font-weight:500;color:var(--mute);margin:26px 0 4px}
 .stat{border:1px solid var(--line);border-radius:16px;padding:14px}.stat b{display:block;font-size:20px;font-weight:600}.stat small{color:var(--mute)}
 .eta{margin-top:6px;color:var(--rose);font-size:13px;font-weight:500}
 .sb{color:#d3d3da;padding:2px}.sb.on{color:var(--rose)}.sb.on svg{fill:currentColor}.sb svg{width:26px;height:26px}.stars{margin-top:8px}.stars .sb svg{width:18px;height:18px}
-.rate{margin-top:12px;display:flex;justify-content:space-between;align-items:center;color:var(--mute)}
 .rcpt{margin-top:12px;padding:14px;border:1px dashed var(--mute);border-radius:12px;font-size:13px}.r2{display:flex;justify-content:space-between;padding:2px 0}
 .fh{position:fixed;bottom:22%;color:var(--rose);opacity:0;animation:fl 2s ease-out forwards;pointer-events:none;z-index:9}.fh svg{width:22px;height:22px;fill:currentColor}
 @keyframes fl{20%{opacity:.8}to{opacity:0;transform:translateY(-220px)}}
 .tks{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px}
-.tk{flex:none;width:260px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 20px;background:var(--rose-s);border-radius:14px;-webkit-mask:radial-gradient(circle 8px at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 8px at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat;mask:radial-gradient(circle 8px at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 8px at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat}
+.tk{flex:none;width:260px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 20px;background:var(--rose-s);border-radius:14px}
 .tk b{display:block;color:var(--rose)}.tk small{color:var(--mute);display:block}.tk button{flex:none;border-radius:99px;background:var(--rose);color:#fff;padding:6px 14px;font-weight:500}.tk.u{opacity:.45}.tk.u button{background:var(--mute);pointer-events:none}
 .review-box{margin-top:12px;padding:12px;border-radius:13px;background:var(--soft)}
 .review-box .stars{margin:0}
 .review-text{margin-top:7px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
 .review-form{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:14px}
 .review-form p{margin:0;color:var(--mute);font-size:13px}
-.review-form .field{margin-top:8px}
 .review-submit{margin-top:8px;width:100%;padding:10px;border-radius:11px;background:var(--rose);color:white}
 .review-meta{font-size:12px;color:var(--mute);margin-top:5px}
+.song{margin-top:12px}.song a{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px}
+.fv{flex:none;color:#cfcfd6;padding:6px}.fv svg{width:22px;height:22px}.fv.on{color:var(--rose)}.fv.on svg{fill:currentColor}
+.hist{border-bottom:1px solid var(--line)}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;padding:14px 0;text-align:left}
+.hrow small{display:block;color:var(--mute);font-size:13px}.hrow b{font-weight:500}.hrow small.st{color:var(--rose)}.hrow small.st.done{color:var(--ok)}
+.hist .card{margin:0 0 14px}
 .del-order{width:100%;margin-top:10px;padding:10px;border:1px solid #f3c5d0;border-radius:11px;color:var(--rose);font-size:13px}
+[data-theme="lav"]{--rose:#8b6fe0;--rose-s:#f1edfd}
+[data-theme="mint"]{--rose:#2f9e84;--rose-s:#e6f6f1}
+[data-theme="sky"]{--rose:#2f86e0;--rose-s:#e8f2fd}
+[data-theme="peach"]{--rose:#ee7a3c;--rose-s:#fdf0e7}
+[data-theme="dark"]{--ink:#f2f2f5;--mute:#9a9aa2;--line:#2c2c30;--bg:#141416;--soft:#202024;--rose:#ff6b8f;--rose-s:#3a1f28;--ok:#46c28a;color-scheme:dark}
+[data-theme="dark"] .bar{background:rgba(20,20,22,.92)}
+[data-theme="dark"] .btn{color:var(--bg)}[data-theme="dark"] .btn.rose{color:#fff}[data-theme="dark"] .btn.line{color:var(--ink)}
+[data-theme="dark"] .toast{color:var(--bg)}
+.themes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.th{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--line);border-radius:12px}.th i{width:18px;height:18px;border-radius:50%;border:1px solid var(--line)}.th.on{border-color:var(--rose);color:var(--rose)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px}.cw{text-align:center;font-size:12px;color:var(--mute)}
+.cd{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;font-size:14px;gap:2px}
+.cd.today{background:var(--rose-s);color:var(--rose);font-weight:600}.cd.sel{outline:2px solid var(--rose)}
+.dots{display:flex;gap:2px;height:5px}.dots b{width:5px;height:5px;border-radius:50%;background:var(--rose)}
+.cdown{margin-top:14px;padding:18px;border-radius:18px;background:var(--rose-s);text-align:center}.cdown small{color:var(--mute);display:block}.cdown b{display:block;font-weight:600;font-size:16px;margin-top:2px}
+.cdown .big{font-size:44px;font-weight:600;color:var(--rose);line-height:1.2}.cdown .big span{font-size:16px}
+.row small.cdn{color:var(--rose);white-space:nowrap}
+.chk{display:flex;align-items:center;gap:8px;margin-top:10px;color:var(--mute)}.chk input{width:18px;height:18px;accent-color:var(--rose)}
+.mas{display:flex;gap:12px;align-items:center;margin-top:14px}
+.mface{flex:none;width:72px;height:72px;border-radius:50%;background:var(--soft);display:grid;place-items:center}.mface svg{width:44px;height:44px;stroke-width:1.6}
+.bub{position:relative;background:var(--rose-s);border-radius:16px;padding:12px 14px;font-size:14px}
+.bub::before{content:"";position:absolute;left:-6px;top:50%;margin-top:-6px;border:6px solid transparent;border-left:0;border-right-color:var(--rose-s)}
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mk{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;border:1px solid var(--line);border-radius:14px;font-size:12px;color:var(--mute)}
+.mk svg{width:26px;height:26px;color:var(--c)}.mk.on{border-color:var(--c);background:var(--soft);color:var(--ink);font-weight:500}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
 <div id="app"></div>
-
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
-import {
-  getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
-import {
-  getFirestore,collection,setDoc,doc,updateDoc,deleteDoc,arrayUnion,
-  query,where,orderBy,limit,onSnapshot
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getAuth,onAuthStateChanged,signInWithPopup,signOut,GoogleAuthProvider}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getFirestore,collection,doc,onSnapshot,setDoc,updateDoc,deleteDoc,query,where,orderBy,limit}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC25WEoTG90IS1SuxgUEtVmNtXFAmpevos",
@@ -111,11 +133,11 @@ const firebaseConfig = {
   measurementId: "G-HYRY00ZYRZ"
 };
 
+/* อีเมลเจ้าของร้าน (ต้องตรงกับ firestore.rules) */
 const OWNER_EMAIL = "fonngernjaipinta@gmail.com";
 
-/* VAPID Public Key */
+/* VAPID Public Key (สำรองไว้สำหรับ FCM push ในอนาคต ตอนนี้ยังไม่ได้ใช้) */
 const VAPID_KEY = "BNrGsM8fPtfCPz5erE08d2-oXWO4iLEVPfVSCbFJeB5ULMv_sjgHPQZ3IQasnGkdN1YbhUAXivQw77rEIKb9KkU";
-
 const MENU=[
  {id:1,c:"ใกล้ชิด",e:"heart",n:"กอด 1 นาที",d:"กอดแน่นแน่นเลย"},
  {id:2,c:"ใกล้ชิด",e:"smile",n:"หอมแก้ม 1 ครั้ง",d:"เสิร์ฟร้อนๆ"},
@@ -131,13 +153,11 @@ const MENU=[
  {id:15,c:"สิทธิพิเศษ",e:"cup",n:"กินน้ำหวานเกิน 1 แก้ว",d:"อนุมัติพิเศษวันนี้วันเดียว"},
  {id:16,c:"สิทธิพิเศษ",e:"sun",n:"ไม่งอนทั้งวัน",d:"รับประกันความใจดี 24 ชม."}
 ];
-
 const IC={
 heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
 smile:'<circle cx="12" cy="12" r="9"/><path d="M8 14c1 1.6 2.4 2.4 4 2.4s3-.8 4-2.4M9 9.5v.5M15 9.5v.5"/>',
 spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17v4M17 19h4"/>',
 pin:'<path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>',
-link:'<circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/>',
 camera:'<path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
 film:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5z"/>',
 wave:'<path d="M3 9c3-3 6 3 9 0s6 3 9 0M3 15c3-3 6 3 9 0s6 3 9 0"/>',
@@ -147,24 +167,29 @@ trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H4v1a3 3 0 0 0 4 3M16 6h
 star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
 cup:'<path d="M6 8h11v7a4 4 0 0 1-4 4h-3a4 4 0 0 1-4-4z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17M12 3v3"/>',
 sun:'<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6L7 7M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/>',
+music:'<path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2.5"/><circle cx="17" cy="16" r="2.5"/>',
 clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+msad:'<circle cx="12" cy="12" r="9"/><path d="M8.5 16c1-1.6 2.2-2.3 3.5-2.3s2.5.7 3.5 2.3M9 9.5v.8M15 9.5v.8"/>',
+mtired:'<circle cx="12" cy="12" r="9"/><path d="M7.5 10h3M13.5 10h3M9 15.5h6"/>',
+msulk:'<circle cx="12" cy="12" r="9"/><path d="M7.5 8.5l3 1.2M16.5 8.5l-3 1.2M9 16c1-1 2-1.4 3-1.4s2 .4 3 1.4"/>',
+mhug:'<path d="M12 16.5s-3.8-2.3-3.8-5.2a2.2 2.2 0 0 1 3.8-1.4 2.2 2.2 0 0 1 3.8 1.4c0 2.9-3.8 5.2-3.8 5.2z"/><path d="M4 11c0 5 3.5 9 8 9M20 11c0 5-3.5 9-8 9"/>',
+mmeh:'<circle cx="12" cy="12" r="9"/><path d="M9 9.5v.8M15 9.5v.8M9 15h6"/>',
 check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>'
 };
-
 const ico=k=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]||""}</svg>`;
 const CATS=["ทั้งหมด","ใกล้ชิด","เดท","บริการ","สิทธิพิเศษ"];
 const ST=[["new","รับออเดอร์"],["prep","กำลังเตรียม"],["ship","กำลังจัดส่ง"],["done","ส่งถึงแล้ว"]];
 const NEXT={new:"เริ่มเตรียม",prep:"ออกจัดส่ง",ship:"ส่งถึงแล้ว"};
 const $=document.getElementById("app");
-
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 const S={
- rp:{},rc:{},cp:[],cpc:{},menu:null,
- nick:(()=>{try{return localStorage.getItem("ld_nick")||""}catch(e){return""}})(),
+ rp:{},sg:{},ev:[],cm:(()=>{const d=new Date();return{y:d.getFullYear(),m:d.getMonth()}})(),mm:(()=>{const d=new Date();return{y:d.getFullYear(),m:d.getMonth()}})(),cs:null,ce:null,ed:null,msd:null,moods:{},mseen:{},mseenR:{},mfirst:true,uerr:"",sec:"shop",ut:"cal",set:false,theme:lsGet("ld_theme")||"rose",fav:[],hx:{},qo:null,rc:{},cp:[],cpc:{},menu:null,
+ nick:lsGet("ld_nick")||"",
  user:null,owner:false,cat:"ทั้งหมด",cart:{},orders:[],
  reviews:{},ratingDraft:{},reviewDraft:{},
  tab:"menu",otab:"open",first:true,err:"",push:false
 };
-
 S.notif=(()=>{try{return localStorage.getItem("ld_notif")==="1"&&"Notification" in window&&Notification.permission==="granted"}catch(e){return false}})();
 if(S.notif&&"serviceWorker" in navigator)navigator.serviceWorker.register("firebase-messaging-sw.js").catch(()=>{});
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -175,48 +200,26 @@ const toast=t=>{
  try{navigator.vibrate&&navigator.vibrate(120)}catch(x){}
 };
 const n=()=>Object.keys(S.cart).length;
-const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+const ON=()=>S.ownerName||"ฝน";
+const myName=()=>S.owner?ON():(S.nick||(S.user.displayName||"").split(" ")[0]||"แฟน");
+const fbApp=initializeApp(firebaseConfig);
+const auth=getAuth(fbApp),db=getFirestore(fbApp);
 let unsub=null;
-
-const ICN={
- heart:"หัวใจ",smile:"ยิ้ม",spark:"ประกาย",pin:"หมุด",
- camera:"กล้อง",film:"หนัง",wave:"คลื่น",chat:"แชท",
- mail:"จดหมาย",trophy:"ถ้วย",star:"ดาว",cup:"แก้ว",
- sun:"ตะวัน",clock:"นาฬิกา"
-};
+const ICN={heart:"หัวใจ",smile:"ยิ้ม",spark:"ประกาย",pin:"หมุด",camera:"กล้อง",film:"หนัง",wave:"คลื่น",chat:"แชท",mail:"จดหมาย",trophy:"ถ้วย",star:"ดาว",cup:"แก้ว",sun:"ตะวัน",clock:"นาฬิกา",music:"เพลง"};
 const menu=()=>(S.menu||MENU).filter(m=>m.on!==false);
 const greet=()=>{
  const h=new Date().getHours();
  return h<5?"ยังไม่นอนอีกเหรอ":h<12?"อรุณสวัสดิ์":h<17?"สวัสดียามบ่าย":h<21?"สวัสดียามเย็น":"ใกล้เวลานอนแล้วนะ";
 };
-const showSys=async t=>{
- try{
-  const reg=await navigator.serviceWorker.getRegistration();
-  if(reg)await reg.showNotification("Love Delivery",{body:t});
-  else new Notification("Love Delivery",{body:t});
- }catch(x){}
-};
-const ping=t=>{
- if(!t)return;
- toast(t);
- if(S.notif&&document.hidden)showSys(t);
-};
+const showSys=async t=>{try{const reg=await navigator.serviceWorker.getRegistration();if(reg)await reg.showNotification("Love Delivery",{body:t});else new Notification("Love Delivery",{body:t})}catch(x){}};
+const ping=t=>{if(!t)return;toast(t);if(S.notif&&document.hidden)showSys(t)};
 async function toggleNotif(){
- if(S.notif){
-  S.notif=false;
-  try{localStorage.setItem("ld_notif","0")}catch(x){}
-  toast("ปิดแจ้งเตือนแล้ว");
-  return render();
- }
- if(!("Notification" in window)||!("serviceWorker" in navigator))
-  return toast("อุปกรณ์นี้ไม่รองรับ (iPhone ต้องกด Add to Home Screen ก่อน)");
+ if(S.notif){S.notif=false;lsSet("ld_notif","0");toast("ปิดแจ้งเตือนแล้ว");return render()}
+ if(!("Notification" in window)||!("serviceWorker" in navigator))return toast("อุปกรณ์นี้ไม่รองรับ (iPhone ต้องกด Add to Home Screen ก่อน)");
  const p=await Notification.requestPermission();
  if(p!=="granted")return toast("กรุณาอนุญาตการแจ้งเตือนในการตั้งค่าอุปกรณ์");
  try{await navigator.serviceWorker.register("firebase-messaging-sw.js")}catch(e){}
- S.notif=true;
- try{localStorage.setItem("ld_notif","1")}catch(x){}
- toast("เปิดแจ้งเตือนแล้ว");
- render();
+ S.notif=true;lsSet("ld_notif","1");toast("เปิดแจ้งเตือนแล้ว");render();
 }
 const rr=()=>{
  if(!document.getElementById("note")&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))render();
@@ -227,7 +230,6 @@ const etaTxt=e=>{
  return ms>=864e5?"อีก "+Math.ceil(ms/864e5)+" วัน · ถึงวันที่ "+d.toLocaleDateString("th-TH",{day:"numeric",month:"short"})+" เวลา "+hm(e)+" น.":ms>0?"ถึงโดยประมาณ "+hm(e)+" น.":"ใกล้ถึงแล้ว";
 };
 const stars=(value,id)=>[1,2,3,4,5].map(k=>`<button class="sb${k<=value?" on":""}" ${id?`data-r="${id}:${k}"`:"disabled"} aria-label="${k} ดาว">${ico("star")}</button>`).join("");
-
 function hearts(){
  for(let k=0;k<10;k++){
   const e=document.createElement("span");
@@ -236,7 +238,12 @@ function hearts(){
   document.body.appendChild(e);setTimeout(()=>e.remove(),2800);
  }
 }
-
+const PER_ORDER=1,SONG_COST=10;
+const pts=()=>S.orders.filter(o=>o.status==="done"&&!o.redeem).length*PER_ORDER-S.orders.filter(o=>o.redeem).reduce((a,o)=>a+(o.cost||SONG_COST),0);
+function loyaltyBox(){
+ const p=pts(),can=p>=SONG_COST;
+ return `<div class="loy"><div class="row2"><b>สะสมแต้ม</b><small>${p} แต้ม</small></div><div class="pb"><i style="width:${Math.min(100,Math.max(0,p)/SONG_COST*100)}%"></i></div><div class="row2" style="margin-top:8px"><small style="text-align:left">${can?"แลกเพลงได้แล้ว":"อีก "+(SONG_COST-p)+" แต้ม แลกเพลงได้ 1 เพลง"}</small>${can?`<button class="link" data-song style="color:var(--rose);font-weight:500">แลกเพลง</button>`:""}</div></div>`;
+}
 function promoBox(){
  const used=new Set(S.orders.flatMap(o=>(o.coupons||[]).map(c=>c.id)));
  if(!S.cp.length)return "";
@@ -246,9 +253,8 @@ function promoBox(){
   return `<div class="tk${u?" u":""}"><div><b>${esc(c.t)}</b><small>${esc(c.d||"")}</small></div><button data-cu="${c.id}" ${u?"disabled":""} ${on?'style="background:var(--ink)"':""}>${u?"ใช้แล้ว":on?"ยกเลิก":"ใช้คูปอง"}</button></div>`;
  }).join("")+`</div>`;
 }
-
 function statsView(){
- const L=S.orders,done=L.filter(o=>o.status==="done").length,cnt={};
+ const L=S.orders,cnt={};
  let tot=0;
  L.forEach(o=>(o.items||[]).forEach(x=>{cnt[x.n]=(cnt[x.n]||0)+x.q;tot+=x.q}));
  const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
@@ -257,321 +263,448 @@ function statsView(){
  const scores=[...reviews.map(r=>Number(r.rating)),...legacy].filter(x=>x>=1&&x<=5);
  const avg=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1):"-";
  const g=(v,l)=>`<div class="stat"><b>${v}</b><small>${l}</small></div>`;
- return `<div class="grid">${g(L.length,"ออเดอร์ทั้งหมด")}${g(tot,"รายการที่สั่ง")}${g(top?esc(top[0]):"-","สั่งบ่อยที่สุด")}${g(avg,"คะแนนเฉลี่ย")}${g(reviews.length,"รีวิวที่บันทึกถาวร")}</div>`;
+ return `<div class="grid">${g(L.length,"ออเดอร์ทั้งหมด")}${g(tot,"รายการที่สั่ง")}${g(top?esc(top[0]):"-","สั่งบ่อยที่สุด")}${g(avg,"คะแนนเฉลี่ย")}${g(reviews.length,"รีวิว")}${S.owner?"":g(pts(),"แต้มคงเหลือ")}</div>`;
 }
-
 function menuEd(){
  const M=S.menu||MENU;
  return `<h2>โปรโมชั่น / คูปอง</h2>`+
  S.cp.map((c,i)=>`<div class="row"><div class="ic">${ico("star")}</div><div class="t"><b>${esc(c.t)}</b><small>${esc(c.d||"")}</small></div><button class="link" data-cd="${i}">ลบ</button></div>`).join("")+
- `<input class="field" id="ct" placeholder="ชื่อคูปอง เช่น กอดฟรีเพิ่ม 1 ครั้ง"><input class="field" id="cd" placeholder="รายละเอียดสั้นๆ (ไม่บังคับ)"><button class="btn rose" id="cpa">ออกคูปอง</button><h2>เมนู (${M.length})</h2>`+
- M.map((m,i)=>`<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b style="${m.on===false?"opacity:.4":""}">${esc(m.n)}</b><small>${esc(m.c)}</small></div><button class="link" data-me="${i}">แก้</button><button class="link" data-mt="${i}">${m.on===false?"เปิด":"ซ่อน"}</button><button class="link" data-md="${i}">ลบ</button></div>`).join("")+
- `<h2>เพิ่มเมนูใหม่</h2><input class="field" id="an" placeholder="ชื่อเมนู"><input class="field" id="ad" placeholder="คำอธิบายสั้นๆ"><select class="field" id="ac">${CATS.slice(1).map(c=>`<option>${c}</option>`).join("")}</select><select class="field" id="ai">${Object.keys(ICN).map(k=>`<option value="${k}">ไอคอน${ICN[k]}</option>`).join("")}</select><button class="btn rose" id="am">เพิ่มเมนู</button>`;
+ `<input class="field" id="ct" placeholder="ชื่อคูปอง เช่น กอดฟรีเพิ่ม 1 ครั้ง"><input class="field" id="cd" placeholder="รายละเอียดสั้นๆ (ไม่บังคับ)"><button class="btn rose" id="cpa" style="margin-top:8px">ออกคูปอง</button><h2>เมนู (${M.length})</h2>`+
+ M.map((m,i)=>`<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b style="${m.on===false?"opacity:.4":""}">${esc(m.n)}</b><small>${esc(m.c)}</small></div><button class="fv${S.fav.includes(m.id)?" on":""}" data-fv="${m.id}" aria-label="เมนูโปรด">${ico("heart")}</button><button class="link" data-me="${i}">แก้</button><button class="link" data-mt="${i}">${m.on===false?"เปิด":"ซ่อน"}</button><button class="link" data-md="${i}">ลบ</button></div>`).join("")+
+ `<h2>เพิ่มเมนูใหม่</h2><input class="field" id="an" placeholder="ชื่อเมนู"><input class="field" id="ad" placeholder="คำอธิบายสั้นๆ"><select class="field" id="ac">${CATS.slice(1).map(c=>`<option>${c}</option>`).join("")}</select><select class="field" id="ai">${Object.keys(ICN).map(k=>`<option value="${k}">ไอคอน${ICN[k]}</option>`).join("")}</select><button class="btn rose" id="am" style="margin-top:8px">เพิ่มเมนู</button>`;
 }
-
-function reviewHistory(){
+function reviewHistory(canDelete){
  const list=Object.entries(S.reviews).map(([id,r])=>({id,...r})).sort((a,b)=>(b.ts||0)-(a.ts||0));
- if(!list.length)return `<div class="empty">ยังไม่มีรีวิวที่บันทึกไว้</div>`;
- return `<h2>รีวิวทั้งหมด ${list.length} รายการ</h2>`+list.map(r=>{
+ if(!list.length)return canDelete?`<div class="empty">ยังไม่มีรีวิว</div>`:"";
+ return `<h2>${canDelete?"รีวิวทั้งหมด":"รีวิวที่ส่งแล้ว"} ${list.length} รายการ</h2>`+list.map(r=>{
   const d=r.ts?new Date(r.ts).toLocaleString("th-TH",{dateStyle:"medium",timeStyle:"short"}):"";
-  return `<div class="card"><div class="h"><b>${esc(r.name||"ลูกค้า")}</b><small>${d}</small></div><div class="review-box"><div class="stars">${stars(Number(r.rating)||0)}</div><div class="review-text">${esc(r.text||"ไม่ได้เขียนข้อความ")}</div></div><div class="review-meta">ออเดอร์ #${esc(String(r.orderNum||r.orderId||"").slice(-8))}</div></div>`;
+  return `<div class="card"><div class="h"><b>${esc(r.name||"ลูกค้า")}</b><small>${d}</small></div><div class="review-box"><div class="stars">${stars(Number(r.rating)||0)}</div><div class="review-text">${esc(r.text||"ไม่ได้เขียนข้อความ")}</div></div><div class="review-meta">ออเดอร์ #${esc(String(r.orderNum||r.orderId||"").slice(-8))}</div>${canDelete?`<button class="del-order" data-del-review="${r.id}">ลบรีวิวนี้</button>`:""}</div>`;
  }).join("");
 }
-
 onAuthStateChanged(auth,u=>{
  S.user=u;
  S.owner=!!u&&u.email&&u.email.toLowerCase()===OWNER_EMAIL.toLowerCase();
  if(unsub){unsub();unsub=null}
- S.orders=[];S.reviews={};S.first=true;
-
+ S.orders=[];S.reviews={};S.fav=[];S.first=true;S.ev=[];S.moods={};S.mfirst=true;S.uerr="";S.set=false;S.sp=null;S.spErr="";
  if(u){
   const col=collection(db,"orders");
-  const q=S.owner
-   ?query(col,orderBy("ts","desc"),limit(80))
-   :query(col,where("uid","==",u.uid));
-
+  const q=S.owner?query(col,orderBy("ts","desc"),limit(500)):query(col,where("uid","==",u.uid));
   const u1=onSnapshot(q,snap=>{
    if(!S.first)snap.docChanges().forEach(ch=>{
     const d=ch.doc.data();
     if(S.owner&&ch.type==="added")ping("ออเดอร์ใหม่จาก "+d.name);
     if(!S.owner&&ch.type==="modified"&&!(ch.doc.metadata&&ch.doc.metadata.hasPendingWrites)){
      const s=ST.find(x=>x[0]===d.status);
-     ping(d.reply&&S.rp[ch.doc.id]!==d.reply?"ฝน: "+d.reply:s?s[1]:"");
+     ping(d.songUrl&&S.sg[ch.doc.id]!==d.songUrl?ON()+"ส่งเพลงให้แล้ว":d.reply&&S.rp[ch.doc.id]!==d.reply?(d.replyBy||ON())+": "+d.reply:s?s[1]+(d.status==="done"&&!d.redeem?" · ได้รับ "+PER_ORDER+" แต้ม":""):"");
     }
    });
    S.first=false;
-   snap.docs.forEach(x=>{S.rp[x.id]=x.data().reply});
+   snap.docs.forEach(x=>{S.rp[x.id]=x.data().reply;S.sg[x.id]=x.data().songUrl});
    S.orders=snap.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>b.ts-a.ts);
    rr();
   },e=>{S.err="อ่านออเดอร์ไม่ได้: "+e.code;render()});
-
-  const u2=onSnapshot(doc(db,"config","coupons"),s=>{
-   S.cp=s.exists()?s.data().items||[]:[];rr();
-  },()=>{});
-  const u3=onSnapshot(doc(db,"config","menu"),s=>{
-   S.menu=s.exists()?s.data().items:null;rr();
-  },()=>{});
-
+  const u2=onSnapshot(doc(db,"config","coupons"),s=>{S.cp=s.exists()?s.data().items||[]:[];rr()},()=>{});
+  const u3=onSnapshot(doc(db,"config","menu"),s=>{S.menu=s.exists()?s.data().items:null;rr()},()=>{});
   const reviewCol=collection(db,"reviews");
-  const reviewQuery=S.owner
-   ?query(reviewCol,orderBy("ts","desc"),limit(200))
-   :query(reviewCol,where("uid","==",u.uid));
-
+  const reviewQuery=S.owner?query(reviewCol,orderBy("ts","desc"),limit(200)):query(reviewCol,where("uid","==",u.uid));
   const u4=onSnapshot(reviewQuery,snap=>{
    const map={};
    snap.docs.forEach(x=>map[x.id]=x.data());
-   S.reviews=map;
+   S.reviews=map;rr();
+  },e=>{S.err="อ่านรีวิวไม่ได้: "+e.code;render()});
+  if(S.nick)setDoc(doc(db,"profiles",u.uid),{nick:S.nick},{merge:true}).catch(()=>{});
+  const u5=onSnapshot(doc(db,"favorites",u.uid),s=>{S.fav=s.exists()?s.data().ids||[]:[];rr()},()=>{});
+  const s6=()=>onSnapshot(collection(db,"events"),snap=>{
+   S.ev=snap.docs.map(x=>({id:x.id,...x.data()}));S.uerr="";checkReminders();rr();
+  },e=>{S.uerr="เปิดปฏิทินไม่ได้ ("+e.code+")";rr()});
+  const s7=()=>onSnapshot(query(collection(db,"moods"),orderBy("ts","desc"),limit(600)),snap=>{
+   if(!S.mfirst)snap.docChanges().forEach(ch=>{
+    const d=ch.doc.data(),id=ch.doc.id;
+    if(ch.type==="removed"||(ch.doc.metadata&&ch.doc.metadata.hasPendingWrites))return;
+    if(d.uid!==S.user.uid&&S.mseen[id]!==d.mood+"|"+(d.text||""))ping((d.name||"อีกฝ่าย")+" อัปเดตอารมณ์: "+mdef(d.mood)[1]);
+    if(d.uid===S.user.uid&&d.reply&&S.mseenR[id]!==d.reply)ping((d.replyBy||"อีกฝ่าย")+" ส่งข้อความถึงตัว: "+d.reply);
+   });
+   S.mfirst=false;const mp={};
+   snap.docs.forEach(x=>{const d=x.data();mp[x.id]=d;S.mseen[x.id]=d.mood+"|"+(d.text||"");S.mseenR[x.id]=d.reply});
+   S.moods=mp;rr();
+  },e=>{S.uerr="เปิดอารมณ์ไม่ได้ ("+e.code+")";rr()});
+  const u8=onSnapshot(doc(db,"profiles",u.uid),s=>{
+   if(s.exists()){const p=s.data();if(p.theme){S.theme=p.theme;lsSet("ld_theme",p.theme)}if(p.nick){S.nick=p.nick;lsSet("ld_nick",p.nick)}}
    rr();
-  },e=>{
-   console.error("Review listener:",e);
-   S.err="อ่านรีวิวไม่ได้: "+e.code;
-   render();
-  });
-
-  unsub=()=>{u1();u2();u3();u4()};
-
+  },()=>{});
+  const u9=onSnapshot(doc(db,"config","shop"),s=>{S.ownerName=(s.exists()&&s.data().ownerName)||"ฝน";rr()},()=>{});
+  let sp6=null,sp7=null;
+  const startSpace=()=>{if(!sp6){sp6=s6();sp7=s7()}};
+  let u10=()=>{};
+  if(S.owner){S.sp=true;startSpace()}
+  else u10=onSnapshot(doc(db,"spaceLock","partner"),s=>{S.sp=!!(s.exists()&&s.data().uid===u.uid);if(S.sp)startSpace();rr()},()=>{S.sp=false;rr()});
+  unsub=()=>{u1();u2();u3();u4();u5();u8();u9();u10();sp6&&sp6();sp7&&sp7()};
  }
  render();
 });
-
 function render(){
+ applyTheme();
  if(!S.user)return login();
+ if(S.set){$.innerHTML=settingsView();return bindSettings()}
  S.owner?owner():customer();
 }
-
 function nickOk(){
  const v=document.getElementById("nk").value.trim();
  if(!v){S.err="กรุณากรอกชื่อเล่น";login();return false}
- S.nick=v;S.err="";
- try{localStorage.setItem("ld_nick",v)}catch(x){}
+ S.nick=v;S.err="";lsSet("ld_nick",v);
  return true;
 }
-
 function login(){
  $.innerHTML=`<div class="login"><div class="mark">${ico("heart")}</div><h1>Love Delivery</h1><p>ส่งความรักถึงที่ ทุกเวลา</p>
  <label class="lb" for="nk">ชื่อเล่น</label><input class="field" id="nk" placeholder="กรอกชื่อเล่น" maxlength="20" autocomplete="nickname" value="${esc(S.nick)}" style="margin:0 0 4px"><button class="btn" id="g">เข้าสู่ระบบด้วย Google</button><div class="err">${esc(S.err)}</div></div>`;
  document.getElementById("g").onclick=()=>{
   if(!nickOk())return;
-  signInWithPopup(auth,new GoogleAuthProvider()).catch(e=>{
-   S.err="เข้าสู่ระบบไม่สำเร็จ ("+e.code+")";login();
-  });
+  signInWithPopup(auth,new GoogleAuthProvider()).catch(e=>{S.err="เข้าสู่ระบบไม่สำเร็จ ("+e.code+")";login()});
  };
 }
-
-/* ปุ่มตั้งค่าแจ้งเตือนจะแสดงเฉพาะเจ้าของร้าน */
 const head=r=>`<div class="top">
  <span class="logo">Love<i>.</i>Delivery</span>
- <span>
-  <button class="link" id="nt">แจ้งเตือน: ${S.notif?"เปิด":"ปิด"}</button> · 
-  <button class="link" id="out">${r?r+" · ":""}ออกจากระบบ</button>
- </span>
+ <span><button class="link" id="stg">ตั้งค่า</button> · <button class="link" id="out">${r?r+" · ":""}ออกจากระบบ</button></span>
 </div>`;
-
 function track(o){
  const i=ST.findIndex(s=>s[0]===o.status);
  return `<div class="trk">${ST.map((s,k)=>`<div class="s ${i===3||k<i?"d":k===i?"n":""}"><i></i>${s[1]}</div>`).join("")}</div>`;
 }
-
 const no=o=>"#"+(o.num?String(o.num).padStart(3,"0"):o.id.slice(-4).toUpperCase());
-
+const priceTxt=o=>o.redeem?(o.cost||SONG_COST)+" แต้ม":(o.items||[]).reduce((a,x)=>a+x.q,0)+" หัวใจ";
 function card(o,own){
  const t=new Date(o.ts).toLocaleString("th-TH",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
  const i=ST.findIndex(s=>s[0]===o.status),dn=i===3;
  const review=S.reviews[o.id];
- let h=`<div class="card"><div class="h"><b>${own?esc(o.name)+" · "+no(o):"ออเดอร์ "+no(o)}</b><small>${t}</small></div>
- <ul class="it">${(o.items||[]).map(x=>`<li><span>${ico(x.e)} ${esc(x.n)}</span><span>×${x.q}</span></li>`).join("")}</ul>
- ${(o.coupons||[]).map(c=>`<div class="note" style="background:var(--rose-s);color:var(--rose)">ใช้คูปอง: ${esc(c.t)}</div>`).join("")}${o.note?`<div class="note">${esc(o.note)}</div>`:""}${track(o)}`;
-
+ let h=`<div class="card"><div class="h"><b>${own?esc(o.name)+" · "+(o.redeem?"เพลงพิเศษ ":"")+no(o):(o.redeem?"เพลงพิเศษ ":"ออเดอร์ ")+no(o)}</b><small>${t}</small></div>
+ <ul class="it">${(o.items||[]).map(x=>`<li><span>${ico(x.e)} ${esc(x.n)}</span><span>×${x.q}</span></li>`).join("")}</ul><div class="row2" style="margin-top:6px;border-top:1px solid var(--line);padding-top:6px"><small style="text-align:left">ยอดรวม</small><b style="font-weight:500">${priceTxt(o)}</b></div>
+ ${o.redeem?`<div class="note" style="background:var(--rose-s);color:var(--rose)">แลกด้วย ${o.cost||SONG_COST} แต้ม</div>`:""}${(o.coupons||[]).map(c=>`<div class="note" style="background:var(--rose-s);color:var(--rose)">ใช้คูปอง: ${esc(c.t)}</div>`).join("")}${o.note?`<div class="note">${esc(o.note)}</div>`:""}${track(o)}`;
  if(o.status==="ship"&&o.eta)h+=`<div class="eta">${etaTxt(o.eta)}</div>`;
- if(o.reply)h+=`<div class="note" style="background:var(--rose-s);color:var(--rose)">ฝน: ${esc(o.reply)}</div>`;
-
+ if(o.reply)h+=`<div class="note" style="background:var(--rose-s);color:var(--rose)">${esc(o.replyBy||ON())}: ${esc(o.reply)}</div>`;
+ if(o.redeem){
+  if(o.songUrl)h+=`<div class="song"><a class="btn rose" href="${esc(o.songUrl)}" target="_blank" rel="noopener">${ico("music")} เปิดฟังเพลง</a></div>`;
+  else if(!own)h+=`<div class="note">รอ${esc(ON())}ส่งเพลงให้นะ</div>`;
+ }
  if(review){
-  h+=`<div class="review-box"><b style="font-size:13px">รีวิวจากลูกค้า</b><div class="stars">${stars(Number(review.rating)||0)}</div><div class="review-text">${esc(review.text||"ไม่ได้เขียนข้อความ")}</div></div>`;
+  h+=`<div class="review-box"><b style="font-size:13px">รีวิวจากลูกค้า</b><div class="stars">${stars(Number(review.rating)||0)}</div><div class="review-text">${esc(review.text||"ไม่ได้เขียนข้อความ")}</div>${own?`<button class="del-order" data-del-review="${o.id}" style="margin-top:8px">ลบรีวิวนี้</button>`:""}</div>`;
  }else if(o.rating){
   h+=`<div class="review-box"><small>คะแนนเดิม</small><div class="stars">${stars(Number(o.rating))}</div></div>`;
  }
-
  if(own){
   if(!dn)h+=(o.status==="prep"?`<select class="field" data-eta="${o.id}" style="margin:12px 0 0">${[5,10,15,20,30,45].map(m=>`<option value="${m}">ถึงใน ${m} นาที</option>`).join("")+[1,2,3,4,5,6,7,8,9,10].map(d=>`<option value="${d*1440}">อีก ${d} วัน</option>`).join("")}</select>`:"")+`<button class="go" data-o="${o.id}" data-s="${ST[i+1][0]}">${NEXT[o.status]}</button>`;
   h+=`<div style="display:flex;gap:8px;margin-top:10px"><input class="field" data-rp="${o.id}" style="margin:0" maxlength="80" placeholder="ตอบกลับสั้นๆ" value="${esc(o.reply||"")}"><button class="go" data-rs="${o.id}" style="margin:0;width:auto;padding:0 18px">ส่ง</button></div>`;
+  if(o.redeem)h+=`<div style="display:flex;gap:8px;margin-top:10px"><input class="field" data-sp="${o.id}" style="margin:0" placeholder="วางลิงก์เพลง (YouTube / Spotify)" value="${esc(o.songUrl||"")}"><button class="go" data-ss="${o.id}" style="margin:0;width:auto;padding:0 18px">ส่งเพลง</button></div>`;
   h+=`<button class="del-order" data-del-order="${o.id}">ลบออเดอร์นี้</button>`;
  }else{
   if(dn&&!review){
    const draft=Number(S.ratingDraft[o.id])||0;
    h+=`<div class="review-form"><p>ให้คะแนนออเดอร์นี้</p><div class="stars">${stars(draft,o.id)}</div><textarea class="field" data-review-text="${o.id}" rows="2" maxlength="500" placeholder="เขียนรีวิวถึงเจ้าของร้าน (ไม่บังคับ)">${esc(S.reviewDraft[o.id]||"")}</textarea><button class="review-submit" data-review-submit="${o.id}">ส่งรีวิว</button></div>`;
   }
-  h+=`<div style="display:flex;gap:8px;margin-top:12px">${dn?`<button class="btn line" data-rc="${o.id}" style="padding:10px">ใบเสร็จ</button>`:""}<button class="btn line" data-ro="${o.id}" style="padding:10px">สั่งอีกครั้ง</button></div>`;
-  if(S.rc[o.id])h+=`<div class="rcpt"><b>Love Delivery</b><div>${no(o)} · ${t}</div>${(o.items||[]).map(x=>`<div class="r2"><span>${esc(x.n)}</span><span>×${x.q}</span></div>`).join("")}${(o.coupons||[]).map(c=>`<div class="r2"><span>คูปอง: ${esc(c.t)}</span><span>ใช้แล้ว</span></div>`).join("")}<div class="r2"><b>ยอดรวม</b><b>${(o.items||[]).reduce((a,x)=>a+x.q,0)} หัวใจ</b></div><div style="text-align:center;margin-top:8px">ขอบคุณที่มาอุดหนุนนะ<br>ลงชื่อ ฝน</div></div>`;
+  h+=`<div style="display:flex;gap:8px;margin-top:12px">${dn?`<button class="btn line" data-rc="${o.id}" style="padding:10px">ใบเสร็จ</button>`:""}${o.redeem?"":`<button class="btn line" data-ro="${o.id}" style="padding:10px">สั่งอีกครั้ง</button>`}</div>`;
+  if(S.rc[o.id])h+=`<div class="rcpt"><b>Love Delivery</b><div>${no(o)} · ${t}</div>${(o.items||[]).map(x=>`<div class="r2"><span>${esc(x.n)}</span><span>×${x.q}</span></div>`).join("")}${(o.coupons||[]).map(c=>`<div class="r2"><span>คูปอง: ${esc(c.t)}</span><span>ใช้แล้ว</span></div>`).join("")}<div class="r2"><b>ยอดรวม</b><b>${(o.items||[]).reduce((a,x)=>a+x.q,0)} หัวใจ</b></div><div style="text-align:center;margin-top:8px">ขอบคุณที่มาอุดหนุนนะ<br>ลงชื่อ ${esc(ON())}</div></div>`;
  }
  return h+`</div>`;
 }
-
-function customer(){
- const act=S.orders.filter(o=>o.status!=="done").length;
+const mrow=m=>{
+ const q=S.cart[m.id]||0,f=S.fav.includes(m.id);
+ return `<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b>${esc(m.n)}</b><small>${esc(m.d)}</small></div><button class="fv${f?" on":""}" data-fv="${m.id}" aria-label="${f?"เอาออกจากเมนูโปรด":"บันทึกเป็นเมนูโปรด"}">${ico("heart")}</button><div class="qty">${q?`<button class="rb g" data-m="${m.id}" aria-label="ลด">−</button><span>${q}</span>`:""}<button class="rb" data-p="${m.id}" aria-label="เพิ่ม">+</button></div></div>`;
+};
+function histRow(o){
+ const st=(ST.find(s=>s[0]===o.status)||[0,""])[1],open=!!S.hx[o.id];
+ const t=new Date(o.ts).toLocaleString("th-TH",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
+ return `<div class="hist"><button class="hrow" data-hx="${o.id}" aria-expanded="${open}"><div><b>${o.redeem?"เพลงพิเศษ ":"ออเดอร์ "}${no(o)}</b><small>${t}</small></div><div style="text-align:right"><b>${priceTxt(o)}</b><small class="st ${o.status}">${st}</small></div></button>${open?card(o,false):""}</div>`;
+}
+function favEd(){
+ const l=(S.menu||MENU).filter(m=>S.fav.includes(m.id));
+ return l.length?`<h2>เมนูโปรด</h2>`+l.map(m=>`<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b>${esc(m.n)}</b><small>${esc(m.d)}</small></div><button class="fv on" data-fv="${m.id}" aria-label="เอาออกจากเมนูโปรด">${ico("heart")}</button></div>`).join(""):`<div class="empty">ยังไม่มีเมนูโปรด<br>กดรูปหัวใจที่เมนูในแท็บเมนูเพื่อบันทึก</div>`;
+}
+const THEMES=[["rose","ชมพู","#e4456b"],["lav","ม่วง","#8b6fe0"],["mint","มิ้นต์","#2f9e84"],["sky","ฟ้า","#2f86e0"],["peach","พีช","#ee7a3c"],["dark","มืด","#141416"]];
+function applyTheme(){
+ document.documentElement.dataset.theme=S.theme||"rose";
+ const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=S.theme==="dark"?"#141416":"#ffffff";
+}
+const saveProfile=d=>S.user&&setDoc(doc(db,"profiles",S.user.uid),d,{merge:true}).catch(()=>{});
+function settingsView(){
+ return `<div class="top"><span class="logo">ตั้งค่า</span><button class="link" id="sback">กลับ</button></div>
+ <h2>${S.owner?"ชื่อของเจ้าของร้าน (ลูกค้าจะเห็น)":"ชื่อเล่น"}</h2><input class="field" id="sn" maxlength="20" value="${esc(S.owner?ON():S.nick)}" style="margin-top:0"><button class="btn rose" id="ssave" style="margin-top:10px">บันทึกชื่อเล่น</button>
+ ${S.owner?`<h2>รหัสเข้า Space</h2><input class="field" id="spc" inputmode="numeric" maxlength="12" placeholder="ตั้งรหัสใหม่ (ถ้ายังไม่เคยตั้งจะใช้ 2509)" style="margin-top:0"><button class="btn rose" id="spsave" style="margin-top:10px">บันทึกรหัส</button><button class="btn line" id="sprst" style="margin-top:8px">ล้างคนที่เข้า Space แล้ว (ให้ใส่รหัสใหม่)</button>`:""}<h2>ธีม</h2><div class="themes">${THEMES.map(t=>`<button class="th${S.theme===t[0]?" on":""}" data-th="${t[0]}"><i style="background:${t[2]}"></i>${t[1]}</button>`).join("")}</div>
+ <h2>แจ้งเตือน</h2><div class="row"><div class="t"><b>แจ้งเตือนบนเครื่องนี้</b><small>${S.notif?"เปิดอยู่":"ปิดอยู่"}</small></div><button class="btn line" id="nt" style="width:auto;margin:0;padding:8px 16px">${S.notif?"ปิด":"เปิด"}</button></div>
+ <button class="btn line" id="slo" style="margin-top:28px">ออกจากระบบ</button>`;
+}
+function bindSettings(){
+ const g=id=>document.getElementById(id);
+ g("sback").onclick=()=>{S.set=false;render()};
+ g("slo").onclick=()=>{S.set=false;S.cart={};signOut(auth)};
+ g("nt").onclick=toggleNotif;
+ if(S.owner){
+  g("spsave").onclick=()=>{const v=g("spc").value.trim();if(v.length<4)return toast("รหัสอย่างน้อย 4 ตัว");setDoc(doc(db,"spaceSecret","code"),{code:v}).then(()=>{g("spc").value="";toast("ตั้งรหัสใหม่แล้ว")}).catch(()=>toast("บันทึกรหัสไม่สำเร็จ"))};
+  g("sprst").onclick=()=>{if(!confirm("ล้างคนที่เข้า Space แล้วใช่ไหม? อีกฝ่ายต้องใส่รหัสใหม่"))return;deleteDoc(doc(db,"spaceLock","partner")).then(()=>toast("ล้างแล้ว")).catch(()=>toast("ล้างไม่สำเร็จ"))};
+ }
+ g("ssave").onclick=()=>{
+  const v=g("sn").value.trim();
+  if(!v)return toast("กรุณากรอกชื่อเล่น");
+  S.nick=v;lsSet("ld_nick",v);
+  saveProfile({nick:v});if(S.owner){S.ownerName=v;setDoc(doc(db,"config","shop"),{ownerName:v}).catch(()=>toast("บันทึกชื่อไม่สำเร็จ"))}toast("บันทึกชื่อเล่นแล้ว");
+ };
+ $.querySelectorAll("[data-th]").forEach(b=>b.onclick=()=>{
+  S.theme=b.dataset.th;lsSet("ld_theme",S.theme);
+  saveProfile({theme:S.theme});render();
+ });
+}
+const pad=n=>String(n).padStart(2,"0"),dstr=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const today0=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
+const parse=s=>{const[a,b,c]=s.split("-").map(Number);return new Date(a,b-1,c)};
+const nextOcc=e=>{
+ const d=parse(e.date);if(!e.yearly)return d;
+ const t=today0();let x=new Date(t.getFullYear(),d.getMonth(),d.getDate());
+ if(x<t)x=new Date(t.getFullYear()+1,d.getMonth(),d.getDate());
+ return x;
+};
+const daysTo=e=>Math.round((nextOcc(e)-today0())/864e5);
+const ETYPE={anniv:"วันครบรอบ",bday:"วันเกิด",meet:"วันนัดเจอกัน",other:"วันสำคัญอื่นๆ"};
+const EICON={anniv:"heart",bday:"star",meet:"pin",other:"spark"};
+const cdTxt=n=>n===0?"วันนี้":n<0?"ผ่านไปแล้ว":"อีก "+n+" วัน";
+const evOn=ds=>S.ev.filter(e=>e.date===ds||(e.yearly&&e.date.slice(5)===ds.slice(5)));
+const dLong=s=>parse(s).toLocaleDateString("th-TH",{day:"numeric",month:"long",year:"numeric"});
+function checkReminders(){
+ S.ev.forEach(e=>{
+  const n=daysTo(e);if(![0,1,3].includes(n))return;
+  const k="ld_rem_"+e.id+"_"+dstr(nextOcc(e))+"_"+n;
+  if(lsGet(k))return;lsSet(k,"1");
+  ping(n===0?"วันนี้: "+e.title:"อีก "+n+" วัน: "+e.title);
+ });
+}
+function evRow(e){
+ return `<button class="row" data-uev="${e.id}" style="width:100%;text-align:left"><div class="ic">${ico(EICON[e.type]||"spark")}</div><div class="t"><b>${esc(e.title)}</b><small>${ETYPE[e.type]||""}${e.yearly?" · ทุกปี":""} · ${parse(e.date).toLocaleDateString("th-TH",{day:"numeric",month:"short"})}${e.note?" · "+esc(e.note):""}</small></div><small class="cdn">${cdTxt(daysTo(e))}</small></button>`;
+}
+function calGrid(){
+ const {y,m}=S.cm,dim=new Date(y,m+1,0).getDate(),off=new Date(y,m,1).getDay(),ts=dstr(new Date());
+ let c=["อา","จ","อ","พ","พฤ","ศ","ส"].map(n=>`<div class="cw">${n}</div>`).join("")+"<div></div>".repeat(off);
+ for(let d=1;d<=dim;d++){
+  const ds=y+"-"+pad(m+1)+"-"+pad(d),ev=evOn(ds);
+  c+=`<button class="cd${ds===ts?" today":""}${ds===S.cs?" sel":""}" data-uday="${ds}"><span>${d}</span><i class="dots">${ev.slice(0,3).map(()=>"<b></b>").join("")}</i></button>`;
+ }
+ const mn=new Date(y,m,1).toLocaleDateString("th-TH",{month:"long",year:"numeric"});
+ return `<div class="row2" style="margin-top:16px"><button class="link" data-ucm="-1">‹ ก่อนหน้า</button><b>${mn}</b><button class="link" data-ucm="1">ถัดไป ›</button></div><div class="cal">${c}</div>`;
+}
+function evForm(){
+ const e=S.ed||{};
+ return `<div class="card"><b>${S.ce==="new"?"เพิ่มกิจกรรม":"แก้ไขกิจกรรม"}</b>
+ <input class="field" id="et" placeholder="ชื่อกิจกรรม" maxlength="60" value="${esc(e.title)}">
+ <input class="field" id="edt" type="date" value="${esc(e.date)}">
+ <select class="field" id="ety">${Object.entries(ETYPE).map(([k,v])=>`<option value="${k}"${e.type===k?" selected":""}>${v}</option>`).join("")}</select>
+ <textarea class="field" id="eno" rows="2" maxlength="200" placeholder="รายละเอียด (ไม่บังคับ)">${esc(e.note)}</textarea>
+ <label class="chk"><input type="checkbox" id="eyr"${e.yearly?" checked":""}> ทำซ้ำทุกปี</label>
+ <p style="color:var(--mute);font-size:13px;margin:8px 0 0">แจ้งเตือนล่วงหน้า 3 วัน 1 วัน และในวันนั้นให้อัตโนมัติ</p>
+ <div style="display:flex;gap:8px;margin-top:12px"><button class="btn rose" data-usave style="margin:0">บันทึก</button><button class="btn line" data-ucancel style="margin:0">ยกเลิก</button></div>
+ ${S.ce!=="new"?`<button class="del-order" data-udel>ลบกิจกรรมนี้</button>`:""}</div>`;
+}
+function calView(){
+ const up=S.ev.map(e=>({e,n:daysTo(e)})).filter(x=>x.n>=0).sort((a,b)=>a.n-b.n);
+ let h=S.ce?evForm():"";
+ if(up[0]){const x=up[0];h+=`<div class="cdown"><small>วันสำคัญถัดไป</small><b>${esc(x.e.title)}</b><div class="big">${x.n===0?"วันนี้":x.n+"<span> วัน</span>"}</div><small>${nextOcc(x.e).toLocaleDateString("th-TH",{day:"numeric",month:"long",year:"numeric"})}</small></div>`}
+ h+=calGrid();
+ if(S.cs){
+  const sd=evOn(S.cs);
+  h+=`<h2>${dLong(S.cs)}</h2>`+(sd.length?sd.map(evRow).join(""):`<div class="empty" style="padding:14px 0">ไม่มีกิจกรรมในวันนี้</div>`)+`<button class="btn line" data-unew="${S.cs}" style="margin-top:8px">+ เพิ่มกิจกรรมในวันนี้</button>`;
+ }else h+=`<button class="btn line" data-unew="${dstr(new Date())}" style="margin-top:14px">+ เพิ่มกิจกรรม</button>`;
+ h+=`<h2>กำลังจะถึง</h2>`+(up.length?up.slice(0,8).map(x=>evRow(x.e)).join(""):`<div class="empty" style="padding:18px 0">ยังไม่มีวันสำคัญที่กำลังจะถึง</div>`);
+ return h;
+}
+const MOODS=[["happy","มีความสุข","smile","#f5b942"],["miss","คิดถึง","heart","#e4456b"],["sad","เศร้า","msad","#5b8def"],["tired","เหนื่อย","mtired","#8a8a90"],["sulk","งอน","msulk","#e0703a"],["hug","อยากกอด","mhug","#c46bd8"],["good","รู้สึกดี","spark","#2fa36b"],["meh","เฉยๆ","mmeh","#a5a5ae"]];
+const MM={happy:"ยิ้มของตัวทำให้วันของเค้าสดใสไปด้วยเลย",miss:"เค้าก็คิดถึงตัวเหมือนกันนะ คิดถึงเยอะๆ เลย",sad:"เค้าอยู่ตรงนี้นะ เล่าให้ฟังได้ทุกเรื่องเลย ไม่เป็นไรนะ",tired:"พักก่อนนะ วันนี้ตัวทำดีที่สุดแล้ว",sulk:"ขอโทษนะ เดี๋ยวเค้าง้อเอง อย่างอนนานนะ",hug:"ส่งกอดแน่นแน่นไปให้เลย กอดๆๆ",good:"ดีจังเลย อยากให้ตัวรู้สึกดีแบบนี้ทุกวัน",meh:"วันธรรมดาก็ดี ขอเค้าอยู่ข้างๆด้วยนะ"};
+const mdef=k=>MOODS.find(x=>x[0]===k)||MOODS[7];
+function mascot(k){
+ const m=MOODS.find(x=>x[0]===k);
+ return `<div class="mas"><div class="mface" style="color:${m?m[3]:"var(--rose)"}">${ico(m?m[2]:"smile")}</div><div class="bub">${m?MM[k]:"วันนี้เป็นยังไงบ้างนะ เลือกอารมณ์ของตัวได้เลย"}</div></div>`;
+}
+const moodEntry=x=>{
+ const m=mdef(x.mood);
+ return `<div class="card"><div class="h"><b>${esc(x.name||"")}</b><small>${parse(x.date).toLocaleDateString("th-TH",{day:"numeric",month:"short"})} · ${hm(x.ts)} น.</small></div><div class="row" style="border:0;padding:8px 0 0"><div class="ic" style="color:${m[3]}">${ico(m[2])}</div><div class="t"><b>${m[1]}</b>${x.text?`<small>${esc(x.text)}</small>`:""}</div></div>${x.reply?`<div class="note">${esc(x.replyBy||"อีกฝ่าย")}: ${esc(x.reply)}</div>`:""}</div>`;
+};
+function moodCal(){
+ const {y,m}=S.mm,dim=new Date(y,m+1,0).getDate(),off=new Date(y,m,1).getDay(),td=dstr(new Date());
+ const by={};Object.values(S.moods).forEach(x=>{(by[x.date]=by[x.date]||[]).push(x)});
+ let c=["อา","จ","อ","พ","พฤ","ศ","ส"].map(n=>`<div class="cw">${n}</div>`).join("")+"<div></div>".repeat(off);
+ for(let d=1;d<=dim;d++){
+  const ds=y+"-"+pad(m+1)+"-"+pad(d);
+  c+=`<button class="cd${ds===td?" today":""}${ds===S.msd?" sel":""}" data-umday="${ds}"><span>${d}</span><i class="dots">${(by[ds]||[]).slice(0,2).map(x=>`<b style="background:${mdef(x.mood)[3]}"></b>`).join("")}</i></button>`;
+ }
+ const mn=new Date(y,m,1).toLocaleDateString("th-TH",{month:"long",year:"numeric"});
+ const list=S.msd?(by[S.msd]||[]):Object.values(S.moods).sort((a,b)=>b.ts-a.ts).slice(0,10);
+ return `<h2>ปฏิทินอารมณ์</h2><div class="row2"><button class="link" data-umm="-1">‹ ก่อนหน้า</button><b>${mn}</b><button class="link" data-umm="1">ถัดไป ›</button></div><div class="cal">${c}</div>
+ <h2>${S.msd?dLong(S.msd):"ล่าสุด"}</h2>`+(list.length?list.map(moodEntry).join(""):`<div class="empty" style="padding:18px 0">ไม่มีบันทึกอารมณ์</div>`);
+}
+function moodView(){
+ const td=dstr(new Date()),me=S.moods[S.user.uid+"_"+td],pt=Object.values(S.moods).find(x=>x.date===td&&x.uid!==S.user.uid);
+ let h=mascot(me&&me.mood)+`<h2>วันนี้เป็นยังไงบ้าง</h2><div class="mgrid">${MOODS.map(m=>`<button class="mk${me&&me.mood===m[0]?" on":""}" data-umk="${m[0]}" style="--c:${m[3]}">${ico(m[2])}<span>${m[1]}</span></button>`).join("")}</div>`;
+ if(me){
+  h+=`<textarea class="field" id="mtx" rows="2" maxlength="200" placeholder="อยากเล่าอะไรเพิ่มไหม (ไม่บังคับ)">${esc(me.text||"")}</textarea><button class="btn line" data-umsave style="margin-top:8px">บันทึกข้อความ</button>`;
+  if(me.reply)h+=`<div class="note" style="background:var(--rose-s);color:var(--rose)">${esc(me.replyBy||"อีกฝ่าย")}: ${esc(me.reply)}</div>`;
+ }
+ h+=`<h2>อารมณ์ของอีกฝ่ายวันนี้</h2>`;
+ if(pt){
+  const m=mdef(pt.mood);
+  h+=`<div class="card"><div class="h"><b>${esc(pt.name||"อีกฝ่าย")}</b><small>${hm(pt.ts)} น.</small></div><div class="row" style="border:0;padding:10px 0 0"><div class="ic" style="color:${m[3]}">${ico(m[2])}</div><div class="t"><b>${m[1]}</b>${pt.text?`<small>${esc(pt.text)}</small>`:""}</div></div>
+  ${pt.reply?`<div class="note">คุณตอบว่า: ${esc(pt.reply)}</div>`:""}
+  <button class="btn rose" data-umquick="${pt.uid}" style="margin-top:10px">ส่งข้อความน่ารักๆ</button>
+  <div style="display:flex;gap:8px;margin-top:8px"><input class="field" id="mrp" style="margin:0" maxlength="100" placeholder="พิมพ์ข้อความปลอบใจ"><button class="go" data-umreply="${pt.uid}" style="margin:0;width:auto;padding:0 18px">ส่ง</button></div></div>`;
+ }else h+=`<div class="empty" style="padding:24px 0">ยังไม่มีการอัปเดตอารมณ์ของอีกฝ่ายวันนี้</div>`;
+ return h+moodCal();
+}
+const secSeg=()=>`<div class="seg">${[["shop","ร้าน"],["us","Space"]].map(t=>`<button data-usec="${t[0]}" class="${S.sec===t[0]?"on":""}">${t[1]}</button>`).join("")}</div>`;
+function lockView(){
+ return `<div class="login" style="min-height:50vh"><div class="mark">${ico("heart")}</div><h1 style="font-size:22px">Space</h1><input class="field" id="spin" type="password" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="ใส่รหัส" style="text-align:center;margin:0 0 4px"><button class="btn rose" data-spgo>เข้า Space</button><div class="err">${esc(S.spErr||"")}</div></div>`;
+}
+function usPage(){
+ $.innerHTML=head(S.owner?"เจ้าของร้าน":"")+`<div class="hello"><h1>Space</h1></div>`+secSeg()+`<div class="seg">${[["cal","ปฏิทิน"],["mood","อารมณ์"]].map(t=>`<button data-uut="${t[0]}" class="${S.ut===t[0]?"on":""}">${t[1]}</button>`).join("")}</div>`+(S.uerr?`<p class="err">${esc(S.uerr)}</p>`:"")+(S.sp===true?(S.ut==="mood"?moodView():calView()):S.sp===false?lockView():'<div class="empty">กำลังตรวจสอบ…</div>');
+ bind();
+}
+function customer(){S.sec==="us"?usPage():customerShop()}
+function owner(){S.sec==="us"?usPage():ownerShop()}
+function customerShop(){
+ const act=S.orders.filter(o=>o.status!=="done");
  let h=head("");
- h+=`<div class="hello"><h1>${greet()} ${esc(S.nick||(S.user.displayName||"").split(" ")[0])}</h1><p>วันนี้อยากได้อะไรเป็นพิเศษไหม</p></div>
- <div class="seg"><button data-t="menu" class="${S.tab==="menu"?"on":""}">เมนู</button><button data-t="orders" class="${S.tab==="orders"?"on":""}">ออเดอร์${act?`<span class="badge">${act}</span>`:""}</button><button data-t="stats" class="${S.tab==="stats"?"on":""}">สถิติ</button></div>`;
-
+ h+=`<div class="hello"><h1>${greet()} ${esc(S.nick||(S.user.displayName||"").split(" ")[0])}</h1><p>วันนี้อยากได้อะไรเป็นพิเศษไหม</p></div>${secSeg()}
+ <div class="seg">${[["menu","เมนู"],["fav","โปรด"],["orders","ออเดอร์"+(act.length?`<span class="badge">${act.length}</span>`:"")],["hist","ประวัติ"],["stats","สถิติ"]].map(t=>`<button data-t="${t[0]}" class="${S.tab===t[0]?"on":""}">${t[1]}</button>`).join("")}</div>`;
  if(S.tab==="menu"){
-  h+=promoBox();
-  h+=`<div class="seg" style="background:none;padding:0;gap:6px;overflow-x:auto">${CATS.map(c=>`<button data-c="${c}" class="${c===S.cat?"on":""}" style="flex:none;padding:6px 14px;background:${c===S.cat?"var(--ink)":"var(--soft)"};color:${c===S.cat?"#fff":"var(--mute)"};box-shadow:none;border-radius:99px;font-size:14px">${c}</button>`).join("")}</div>`;
-  menu().filter(m=>S.cat==="ทั้งหมด"||m.c===S.cat).forEach(m=>{
-   const q=S.cart[m.id]||0;
-   h+=`<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b>${esc(m.n)}</b><small>${esc(m.d)}</small></div><div class="qty">${q?`<button class="rb g" data-m="${m.id}" aria-label="ลด">−</button><span>${q}</span>`:""}<button class="rb" data-p="${m.id}" aria-label="เพิ่ม">+</button></div></div>`;
-  });
-  const nc=Object.keys(S.cpc).length;
-  if(n()||nc)h+=`<div class="bar"><button class="btn rose" id="cart">ดูตะกร้า${n()?` · ${n()} รายการ`:""}${nc?` · ${nc} คูปอง`:""}</button></div>`;
- }else if(S.tab==="stats")h+=statsView();
- else h+=S.orders.length?S.orders.map(o=>card(o,false)).join(""):`<div class="empty">ยังไม่มีออเดอร์</div>`;
-
+  h+=promoBox()+loyaltyBox();
+  h+=`<div class="seg" style="background:none;padding:0;gap:6px;overflow-x:auto;margin-top:14px">${CATS.map(c=>`<button data-c="${c}" class="${c===S.cat?"on":""}" style="flex:none;padding:6px 14px;background:${c===S.cat?"var(--ink)":"var(--soft)"};color:${c===S.cat?"var(--bg)":"var(--mute)"};box-shadow:none;border-radius:99px;font-size:14px">${c}</button>`).join("")}</div>`;
+  menu().filter(m=>S.cat==="ทั้งหมด"||m.c===S.cat).forEach(m=>{h+=mrow(m)});
+ }else if(S.tab==="fav"){
+  const l=menu().filter(m=>S.fav.includes(m.id));
+  h+=l.length?`<h2>เมนูโปรด</h2>`+l.map(mrow).join(""):`<div class="empty">ยังไม่มีเมนูโปรด<br>กดรูปหัวใจที่เมนูในแท็บเมนูเพื่อบันทึก</div>`;
+ }else if(S.tab==="orders")h+=act.length?act.map(o=>card(o,false)).join(""):`<div class="empty">ไม่มีออเดอร์ที่กำลังดำเนินการ</div>`;
+ else if(S.tab==="hist")h+=S.orders.length?`<h2>ทั้งหมด ${S.orders.length} ออเดอร์</h2>`+S.orders.map(histRow).join(""):`<div class="empty">ยังไม่มีประวัติการสั่ง</div>`;
+ else h+=statsView()+reviewHistory(false);
+ const nc=Object.keys(S.cpc).length;
+ if((S.tab==="menu"||S.tab==="fav")&&(n()||nc))h+=`<div class="bar"><button class="btn rose" id="cart">ดูตะกร้า${n()?` · ${n()} รายการ`:""}${nc?` · ${nc} คูปอง`:""}</button></div>`;
  if(S.err)h+=`<p class="err">${esc(S.err)}</p>`;
  $.innerHTML=h;bind();
 }
-
-function owner(){
+function ownerShop(){
  const open=S.orders.filter(o=>o.status!=="done");
  const done=S.orders.filter(o=>o.status==="done"),T=S.otab;
- let h=head("เจ้าของร้าน")+`<div class="hello"><h1>ออเดอร์</h1></div><div class="seg">${[["open","รอ"+(open.length?`<span class="badge">${open.length}</span>`:"")],["done","ส่งแล้ว"],["menu","เมนู"],["stats","สถิติ"],["reviews","รีวิว"]].map(t=>`<button data-ot="${t[0]}" class="${T===t[0]?"on":""}">${t[1]}</button>`).join("")}</div>`;
+ let h=head("เจ้าของร้าน")+`<div class="hello"><h1>ออเดอร์</h1></div>${secSeg()}<div class="seg">${[["open","รอ"+(open.length?`<span class="badge">${open.length}</span>`:"")],["done","ส่งแล้ว"],["menu","เมนู"],["fav","โปรด"],["stats","สถิติ"],["reviews","รีวิว"]].map(t=>`<button data-ot="${t[0]}" class="${T===t[0]?"on":""}">${t[1]}</button>`).join("")}</div>`;
  if(T==="menu")h+=menuEd();
+ else if(T==="fav")h+=favEd();
  else if(T==="stats")h+=statsView();
- else if(T==="reviews")h+=reviewHistory();
+ else if(T==="reviews")h+=reviewHistory(true);
  else{
   const l=T==="open"?open:done;
   h+=l.length?l.map(o=>card(o,true)).join(""):`<div class="empty">ยังไม่มีออเดอร์</div>`;
  }
  $.innerHTML=h+(S.err?`<p class="err">${esc(S.err)}</p>`:"");bind();
 }
-
 function bind(){
  const q=s=>$.querySelectorAll(s);
  const out=document.getElementById("out");
  if(out)out.onclick=()=>{S.cart={};signOut(auth)};
-
- /* ปุ่มตั้งค่าแจ้งเตือนของเจ้าของร้าน */
  const nt=document.getElementById("nt");
  if(nt)nt.onclick=toggleNotif;
-
  q("[data-c]").forEach(b=>b.onclick=()=>{S.cat=b.dataset.c;render()});
  q("[data-t]").forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;render()});
  q("[data-ot]").forEach(b=>b.onclick=()=>{S.otab=b.dataset.ot;render()});
  q("[data-p]").forEach(b=>b.onclick=()=>{const k=b.dataset.p;S.cart[k]=(S.cart[k]||0)+1;render()});
  q("[data-m]").forEach(b=>b.onclick=()=>{const k=b.dataset.m;if(--S.cart[k]<=0)delete S.cart[k];render()});
-
  q("[data-o]").forEach(b=>b.onclick=()=>{
   const x={status:b.dataset.s};
   const se=$.querySelector('[data-eta="'+b.dataset.o+'"]');
   if(se&&x.status==="ship")x.eta=Date.now()+Number(se.value)*60000;
   updateDoc(doc(db,"orders",b.dataset.o),x).catch(()=>toast("อัปเดตไม่สำเร็จ"));
  });
-
+ q("[data-ss]").forEach(b=>b.onclick=()=>{
+  const id=b.dataset.ss,url=$.querySelector('[data-sp="'+id+'"]').value.trim();
+  if(!/^https?:\/\//i.test(url))return toast("วางลิงก์ที่ขึ้นต้นด้วย http:// หรือ https://");
+  updateDoc(doc(db,"orders",id),{songUrl:url}).then(()=>toast("ส่งเพลงให้แล้ว")).catch(()=>toast("ส่งไม่สำเร็จ"));
+ });
  q("[data-rs]").forEach(b=>b.onclick=()=>{
   const id=b.dataset.rs;
-  updateDoc(doc(db,"orders",id),{reply:$.querySelector('[data-rp="'+id+'"]').value.trim()})
+  updateDoc(doc(db,"orders",id),{reply:$.querySelector('[data-rp="'+id+'"]').value.trim(),replyBy:ON()})
    .then(()=>toast("ส่งข้อความแล้ว")).catch(()=>toast("ส่งไม่สำเร็จ"));
  });
-
  q("[data-r]").forEach(b=>b.onclick=()=>{
   const[id,k]=b.dataset.r.split(":");
   S.ratingDraft[id]=Number(k);
-  const o=S.orders.find(x=>x.id===id);
-  if(o)render();
+  if(S.orders.find(x=>x.id===id))render();
  });
-
- q("[data-review-text]").forEach(el=>el.addEventListener("input",()=>{
-  S.reviewDraft[el.dataset.reviewText]=el.value;
- }));
-
+ q("[data-review-text]").forEach(el=>el.addEventListener("input",()=>{S.reviewDraft[el.dataset.reviewText]=el.value}));
  q("[data-review-submit]").forEach(b=>b.onclick=async()=>{
   const id=b.dataset.reviewSubmit;
   const o=S.orders.find(x=>x.id===id);
   const rating=Number(S.ratingDraft[id]);
   const textValue=(S.reviewDraft[id]||"").trim();
-
   if(!o||o.status!=="done")return toast("ออเดอร์นี้ยังรีวิวไม่ได้");
   if(!rating)return toast("เลือกคะแนนก่อนนะ");
   if(S.reviews[id])return toast("ออเดอร์นี้รีวิวแล้ว");
-
   b.disabled=true;
   try{
-   await setDoc(doc(db,"reviews",id),{
-    orderId:id,
-    orderNum:o.num||null,
-    uid:S.user.uid,
-    name:S.nick||(S.user.displayName||"").split(" ")[0]||"ลูกค้า",
-    rating,
-    text:textValue,
-    ts:Date.now()
-   });
-   delete S.ratingDraft[id];
-   delete S.reviewDraft[id];
+   await setDoc(doc(db,"reviews",id),{orderId:id,orderNum:o.num||null,uid:S.user.uid,name:S.nick||(S.user.displayName||"").split(" ")[0]||"ลูกค้า",rating,text:textValue,ts:Date.now()});
+   delete S.ratingDraft[id];delete S.reviewDraft[id];
    toast("ขอบคุณสำหรับรีวิวนะ");
-  }catch(e){
-   console.error(e);
-   toast("ส่งรีวิวไม่สำเร็จ ("+e.code+")");
-   b.disabled=false;
-  }
+  }catch(e){console.error(e);toast("ส่งรีวิวไม่สำเร็จ ("+e.code+")");b.disabled=false}
  });
-
  q("[data-del-order]").forEach(b=>b.onclick=async()=>{
-  const id=b.dataset.delOrder;
   if(!confirm("ยืนยันลบออเดอร์นี้ใช่ไหม?\n\nรีวิวของออเดอร์นี้จะยังถูกเก็บไว้"))return;
   b.disabled=true;
-  try{
-   await deleteDoc(doc(db,"orders",id));
-   toast("ลบออเดอร์แล้ว รีวิวเดิมยังอยู่");
-  }catch(e){
-   console.error(e);
-   toast("ลบออเดอร์ไม่สำเร็จ ("+e.code+")");
-   b.disabled=false;
-  }
+  try{await deleteDoc(doc(db,"orders",b.dataset.delOrder));toast("ลบออเดอร์แล้ว รีวิวเดิมยังอยู่")}
+  catch(e){console.error(e);toast("ลบออเดอร์ไม่สำเร็จ ("+e.code+")");b.disabled=false}
  });
-
+ q("[data-del-review]").forEach(b=>b.onclick=async()=>{
+  if(!S.owner)return;
+  if(!confirm("ลบรีวิวนี้ใช่ไหม?"))return;
+  b.disabled=true;
+  try{await deleteDoc(doc(db,"reviews",b.dataset.delReview));toast("ลบรีวิวแล้ว")}
+  catch(e){console.error(e);toast("ลบรีวิวไม่สำเร็จ ("+e.code+")");b.disabled=false}
+ });
  q("[data-rc]").forEach(b=>b.onclick=()=>{S.rc[b.dataset.rc]=!S.rc[b.dataset.rc];render()});
+ q("[data-fv]").forEach(b=>b.onclick=()=>{
+  const id=Number(b.dataset.fv),a=S.fav.includes(id)?S.fav.filter(x=>x!==id):[...S.fav,id];
+  S.fav=a;render();
+  setDoc(doc(db,"favorites",S.user.uid),{ids:a,updatedAt:Date.now()}).catch(()=>toast("บันทึกเมนูโปรดไม่สำเร็จ"));
+ });
+ q("[data-hx]").forEach(b=>b.onclick=()=>{S.hx[b.dataset.hx]=!S.hx[b.dataset.hx];render()});
  q("[data-ro]").forEach(b=>b.onclick=()=>{
   const o=S.orders.find(x=>x.id===b.dataset.ro);
-  S.cart={};
-  o.items.forEach(x=>{
-   const m=menu().find(m=>m.n===x.n);
-   if(m)S.cart[m.id]=x.q;
+  if(!o)return;
+  const all=S.menu||MENU,miss=[],cart={};
+  (o.items||[]).forEach(x=>{
+   const m=all.find(m=>x.id!=null&&m.id===x.id)||all.find(m=>m.n===x.n);
+   if(m&&m.on!==false)cart[m.id]=x.q;else miss.push(x.n);
   });
-  S.tab="menu";
-  if(!n())toast("เมนูนี้ไม่มีแล้ว");
-  render();
+  S.cart=cart;S.cpc={};S.qo=miss;S.tab="menu";
+  if(!n()){toast("เมนูในออเดอร์นี้ไม่มีขายแล้ว");return render()}
+  checkout();
  });
-
+ q("[data-song]").forEach(b=>b.onclick=async()=>{
+  if(pts()<SONG_COST)return toast("แต้มยังไม่พอ");
+  if(!b.dataset.sure){
+   b.dataset.sure="1";b.textContent="กดอีกครั้งเพื่อยืนยัน";
+   setTimeout(()=>{b.dataset.sure="";b.textContent="แลกเพลง"},4000);
+   return;
+  }
+  b.disabled=true;
+  try{
+   await setDoc(doc(collection(db,"orders")),{uid:S.user.uid,name:S.nick||(S.user.displayName||"").split(" ")[0]||"แฟน",items:[{n:"เพลงพิเศษ",e:"music",q:1}],note:"",coupons:[],redeem:true,cost:SONG_COST,status:"new",ts:Date.now(),num:Number(String(Date.now()).slice(-6))});
+   toast("แลกเพลงแล้ว");S.tab="orders";render();
+  }catch(e){console.error(e);toast("แลกไม่สำเร็จ ("+e.code+")");b.disabled=false}
+ });
  const M=()=>[...(S.menu||MENU)];
  const sv=a=>setDoc(doc(db,"config","menu"),{items:a}).catch(()=>toast("บันทึกไม่สำเร็จ"));
-
- q("[data-mt]").forEach(b=>b.onclick=()=>{
-  const a=M(),i=+b.dataset.mt;
-  a[i]={...a[i],on:a[i].on===false};
-  sv(a);
- });
- q("[data-md]").forEach(b=>b.onclick=()=>{
-  if(!confirm("ลบเมนูนี้?"))return;
-  const a=M();a.splice(+b.dataset.md,1);sv(a);
- });
+ q("[data-mt]").forEach(b=>b.onclick=()=>{const a=M(),i=+b.dataset.mt;a[i]={...a[i],on:a[i].on===false};sv(a)});
+ q("[data-md]").forEach(b=>b.onclick=()=>{if(!confirm("ลบเมนูนี้?"))return;const a=M();a.splice(+b.dataset.md,1);sv(a)});
  q("[data-me]").forEach(b=>b.onclick=()=>{
-  const a=M(),i=+b.dataset.me,nm=prompt("ชื่อเมนู",a[i].n);
-  if(nm===null)return;
-  const d=prompt("คำอธิบาย",a[i].d);
-  if(d===null)return;
+  const a=M(),i=+b.dataset.me,nm=prompt("ชื่อเมนู",a[i].n);if(nm===null)return;const d=prompt("คำอธิบาย",a[i].d);if(d===null)return;
   a[i]={...a[i],n:nm.trim()||a[i].n,d};sv(a);
  });
-
  const am=document.getElementById("am");
  if(am)am.onclick=()=>{
   const nm=document.getElementById("an").value.trim();
   if(!nm)return toast("ใส่ชื่อเมนูก่อน");
   const a=M();
-  a.push({
-   id:Date.now(),c:document.getElementById("ac").value,
-   e:document.getElementById("ai").value,n:nm,
-   d:document.getElementById("ad").value.trim(),on:true
-  });
+  a.push({id:Date.now(),c:document.getElementById("ac").value,e:document.getElementById("ai").value,n:nm,d:document.getElementById("ad").value.trim(),on:true});
   sv(a);
  };
-
  const sc=a=>setDoc(doc(db,"config","coupons"),{items:a}).catch(()=>toast("บันทึกไม่สำเร็จ"));
  const ca=document.getElementById("cpa");
  if(ca)ca.onclick=()=>{
@@ -579,62 +712,105 @@ function bind(){
   if(!t)return toast("ใส่ชื่อคูปองก่อน");
   sc([...S.cp,{id:"c"+Date.now(),t,d:document.getElementById("cd").value.trim()}]);
  };
- q("[data-cd]").forEach(b=>b.onclick=()=>{
-  const a=[...S.cp];a.splice(+b.dataset.cd,1);sc(a);
- });
+ q("[data-cd]").forEach(b=>b.onclick=()=>{const a=[...S.cp];a.splice(+b.dataset.cd,1);sc(a)});
  q("[data-cu]").forEach(b=>b.onclick=()=>{
   const id=b.dataset.cu;
   if(S.cpc[id])delete S.cpc[id];else S.cpc[id]=1;
   render();
  });
-
+ const stg=document.getElementById("stg");if(stg)stg.onclick=()=>{S.set=true;render()};
+ q("[data-usec]").forEach(b=>b.onclick=()=>{S.sec=b.dataset.usec;render()});
+ q("[data-uut]").forEach(b=>b.onclick=()=>{S.ut=b.dataset.uut;render()});
+ q("[data-ucm]").forEach(b=>b.onclick=()=>{const d=new Date(S.cm.y,S.cm.m+Number(b.dataset.ucm),1);S.cm={y:d.getFullYear(),m:d.getMonth()};render()});
+ q("[data-uday]").forEach(b=>b.onclick=()=>{S.cs=S.cs===b.dataset.uday?null:b.dataset.uday;render()});
+ q("[data-unew]").forEach(b=>b.onclick=()=>{S.ce="new";S.ed={title:"",date:b.dataset.unew,type:"meet",note:"",yearly:false};render()});
+ q("[data-uev]").forEach(b=>b.onclick=()=>{const e=S.ev.find(x=>x.id===b.dataset.uev);if(!e)return;S.ce=e.id;S.ed={...e};render()});
+ q("[data-ucancel]").forEach(b=>b.onclick=()=>{S.ce=null;S.ed=null;render()});
+ q("[data-usave]").forEach(b=>b.onclick=async()=>{
+  const g=id=>document.getElementById(id);
+  const title=g("et").value.trim(),date=g("edt").value;
+  if(!title)return toast("กรุณาใส่ชื่อกิจกรรม");
+  if(!date)return toast("กรุณาเลือกวันที่");
+  const old=S.ed||{};
+  const d={title,date,type:g("ety").value,note:g("eno").value.trim(),yearly:g("eyr").checked,by:old.by||S.user.uid,name:old.name||myName(),ts:old.ts||Date.now()};
+  b.disabled=true;
+  try{
+   await setDoc(S.ce==="new"?doc(collection(db,"events")):doc(db,"events",S.ce),d);
+   const p=parse(date);S.ce=null;S.ed=null;S.cs=date;S.cm={y:p.getFullYear(),m:p.getMonth()};
+   toast("บันทึกกิจกรรมแล้ว");render();
+  }catch(e){console.error(e);toast("บันทึกไม่สำเร็จ ("+e.code+")");b.disabled=false}
+ });
+ q("[data-udel]").forEach(b=>b.onclick=async()=>{
+  if(!confirm("ลบกิจกรรมนี้ใช่ไหม?"))return;try{await deleteDoc(doc(db,"events",S.ce));S.ce=null;S.ed=null;toast("ลบกิจกรรมแล้ว");render()}
+  catch(e){console.error(e);toast("ลบไม่สำเร็จ ("+e.code+")")}
+ });
+ q("[data-umk]").forEach(b=>b.onclick=()=>{
+  const td=dstr(new Date()),id=S.user.uid+"_"+td;
+  const d={uid:S.user.uid,name:myName(),date:td,mood:b.dataset.umk,ts:Date.now()};
+  S.moods[id]={...(S.moods[id]||{}),...d};render();
+  setDoc(doc(db,"moods",id),d,{merge:true}).catch(()=>toast("บันทึกอารมณ์ไม่สำเร็จ"));
+ });
+ q("[data-umsave]").forEach(b=>b.onclick=()=>{
+  const id=S.user.uid+"_"+dstr(new Date());
+  setDoc(doc(db,"moods",id),{text:document.getElementById("mtx").value.trim(),ts:Date.now()},{merge:true})
+   .then(()=>toast("บันทึกข้อความแล้ว")).catch(()=>toast("บันทึกไม่สำเร็จ"));
+ });
+ const mrep=(uid,text)=>updateDoc(doc(db,"moods",uid+"_"+dstr(new Date())),{reply:text,replyBy:myName(),replyTs:Date.now()})
+  .then(()=>toast("ส่งข้อความแล้ว")).catch(()=>toast("ส่งไม่สำเร็จ"));
+ q("[data-umreply]").forEach(b=>b.onclick=()=>{
+  const v=document.getElementById("mrp").value.trim();
+  if(!v)return toast("พิมพ์ข้อความก่อนนะ");
+  mrep(b.dataset.umreply,v);
+ });
+ q("[data-umquick]").forEach(b=>b.onclick=()=>{
+  const pt=Object.values(S.moods).find(x=>x.date===dstr(new Date())&&x.uid===b.dataset.umquick);
+  if(pt)mrep(pt.uid,MM[pt.mood]||"ส่งกำลังใจไปให้นะ");
+ });
+ q("[data-umm]").forEach(b=>b.onclick=()=>{const d=new Date(S.mm.y,S.mm.m+Number(b.dataset.umm),1);S.mm={y:d.getFullYear(),m:d.getMonth()};render()});
+ q("[data-umday]").forEach(b=>b.onclick=()=>{S.msd=S.msd===b.dataset.umday?null:b.dataset.umday;render()});
+ q("[data-spgo]").forEach(b=>b.onclick=async()=>{
+  const v=document.getElementById("spin").value.trim();
+  if(!v)return toast("ใส่รหัสก่อนนะ");
+  b.disabled=true;
+  try{
+   await setDoc(doc(db,"spaceLock","partner"),{uid:S.user.uid,email:S.user.email||"",name:S.nick||"",code:v,ts:Date.now()});
+   S.spErr="";toast("เข้า Space แล้ว");
+   if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();
+   render();
+  }catch(e){
+   S.spErr=(e&&e.code==="permission-denied")?"รหัสไม่ถูกต้อง หรือมีคนเข้า Space ไปแล้ว":"เข้าไม่สำเร็จ ("+(e&&e.code)+")";
+   b.disabled=false;usPage();
+  }
+ });
  const c=document.getElementById("cart");
  if(c)c.onclick=checkout;
 }
-
 function checkout(){
  const its=menu().filter(m=>S.cart[m.id]);
  const cps=S.cp.filter(c=>S.cpc[c.id]);
-
- $.innerHTML=head("")+`<div class="hello"><h1>ตะกร้า</h1></div>`+
+ const miss=S.qo||[];S.qo=null;
+ $.innerHTML=head("")+`<div class="hello"><h1>ตะกร้า</h1><p>ตรวจสอบรายการล่าสุดก่อนกดสั่ง</p></div>`+(miss.length?`<div class="note" style="background:var(--rose-s);color:var(--rose)">เมนูที่ไม่มีขายแล้ว นำออกจากตะกร้าให้แล้ว: ${miss.map(esc).join(", ")}</div>`:"")+
  its.map(m=>`<div class="row"><div class="ic">${ico(m.e)}</div><div class="t"><b>${esc(m.n)}</b></div><b>×${S.cart[m.id]}</b></div>`).join("")+
  cps.map(c=>`<div class="row"><div class="ic">${ico("star")}</div><div class="t"><b>${esc(c.t)}</b><small>คูปอง</small></div></div>`).join("")+
  `<div class="row2" style="padding:14px 0"><b>รวม ${its.length} รายการ${cps.length?` + ${cps.length} คูปอง`:""}</b><small>${its.reduce((a,m)=>a+S.cart[m.id],0)} ชิ้น</small></div>`+
  `<h2>โน้ตถึงเจ้าของร้าน (ไม่บังคับ)</h2><textarea class="field" id="note" rows="2" placeholder="เช่น ขอตอนนี้เลย"></textarea>
  <div class="bar"><button class="btn line" id="bk" style="margin-bottom:8px">กลับไปเลือกเพิ่ม</button><button class="btn rose" id="ok">สั่งเลย</button></div>`;
-
  document.getElementById("out").onclick=()=>signOut(auth);
- const n2=document.getElementById("nt");if(n2)n2.onclick=toggleNotif;
+ const n2=document.getElementById("stg");if(n2)n2.onclick=()=>{S.set=true;render()};
  document.getElementById("bk").onclick=()=>{render()};
-
  document.getElementById("ok").onclick=async function(){
   this.disabled=true;
   try{
    const num=Number(String(Date.now()).slice(-6));
-   const orderRef=doc(collection(db,"orders"));
-   await setDoc(orderRef,{
-    uid:S.user.uid,
-    name:S.nick||(S.user.displayName||"").split(" ")[0]||"แฟน",
-    items:its.map(m=>({n:m.n,e:m.e,q:S.cart[m.id]})),
-    note:document.getElementById("note").value.trim(),
-    coupons:cps.map(c=>({id:c.id,t:c.t})),
-    status:"new",
-    ts:Date.now(),
-    num
-   });
-
+   await setDoc(doc(collection(db,"orders")),{uid:S.user.uid,name:S.nick||(S.user.displayName||"").split(" ")[0]||"แฟน",items:its.map(m=>({id:m.id,n:m.n,e:m.e,q:S.cart[m.id]})),note:document.getElementById("note").value.trim(),coupons:cps.map(c=>({id:c.id,t:c.t})),status:"new",ts:Date.now(),num});
    S.cart={};S.cpc={};
    $.innerHTML=`<div class="done"><div class="ok">${ico("check")}</div><h1>กำลังจัดส่งความรัก</h1><p style="color:var(--mute)">เจ้าของร้านได้รับออเดอร์แล้ว</p></div><div class="bar"><button class="btn rose" id="tr">ดูสถานะออเดอร์</button></div>`;
    document.getElementById("tr").onclick=()=>{S.tab="orders";render()};
    hearts();
-  }catch(e){
-   toast("ส่งไม่สำเร็จ ("+e.code+")");
-   this.disabled=false;
-  }
+  }catch(e){console.error(e);toast("ส่งไม่สำเร็จ ("+e.code+")");this.disabled=false}
  };
 }
-
-setInterval(()=>{if(S.user)rr()},60000);
+setInterval(()=>{if(S.user){checkReminders();rr()}},60000);
 
 (()=>{
  try{
